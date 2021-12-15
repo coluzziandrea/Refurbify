@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: advertisements-depl
+  name: advertisement-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: advertisements
+      app: advertisement
   template:
     metadata:
       labels:
-        app: advertisements
+        app: advertisement
     spec:
       containers:
-        - name: query
-          image: us.gcr.io/refurbify/advertisements
+        - name: advertisement
+          image: us.gcr.io/refurbify/advertisement
           env:
             - name: JWT_KEY
               valueFrom:
@@ -25,12 +25,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: advertisements-srv
+  name: advertisement-srv
 spec:
   selector:
-    app: advertisements
+    app: advertisement
   ports:
-    - name: advertisements
+    - name: advertisement
       protocol: TCP
       port: 3000
       targetPort: 3000
