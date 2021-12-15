@@ -1,4 +1,4 @@
-name: AuthTests
+name: AdvertisementTests
 
 on:
   push:
@@ -14,4 +14,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: action/checkout@v2
-      - run: cd auth && npm install && npm run test:ci
+      - run: cd refurbify/advertisement && npm install && npm run test:ci
