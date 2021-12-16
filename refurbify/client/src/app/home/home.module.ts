@@ -4,11 +4,9 @@ import { LandComponent } from './land/land.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { AboutComponent } from './about/about.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { CoreModule } from '../core/core.module';
 import { HomeRoutingModule } from './home.routing.module';
-import { HomeComponent } from './home/home.component';
-import { MatButtonModule } from '@angular/material/button';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AngularMaterialModule } from '../angular-material.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -16,8 +14,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ContactsComponent,
     AboutComponent,
     NotFoundComponent,
-    HomeComponent,
   ],
-  imports: [CommonModule, HomeRoutingModule, CoreModule, MatButtonModule],
+  imports: [
+    CommonModule,
+    HomeRoutingModule,
+    AngularMaterialModule,
+    RouterModule,
+  ],
 })
 export class HomeModule {}
