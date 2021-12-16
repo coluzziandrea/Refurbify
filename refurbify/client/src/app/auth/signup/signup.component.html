@@ -1,1 +1,84 @@
-<p>signup works!</p>
+<mat-card>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+
+  <form (submit)="onSignup(signupForm)" #signupForm="ngForm" *ngIf="!isLoading">
+    <mat-form-field>
+      <input
+        matInput
+        name="email"
+        ngModel
+        type="email"
+        placeholder="E-Mail"
+        #emailInput="ngModel"
+        required
+        email
+      />
+      <mat-error *ngIf="emailInput.invalid"
+        >Inserisci un Email Valida.</mat-error
+      >
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        type="password"
+        name="password"
+        ngModel
+        matInput
+        placeholder="Password"
+        #passwordInput="ngModel"
+        required
+      />
+      <mat-error *ngIf="passwordInput.invalid"
+        >Inserisci una Password Valida.</mat-error
+      >
+    </mat-form-field>
+
+    <mat-form-field>
+      <input
+        matInput
+        name="name"
+        ngModel
+        type="text"
+        placeholder="Nome"
+        #nameInput="ngModel"
+        required
+      />
+      <mat-error *ngIf="nameInput.invalid">Inserisci un Nome Valido.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input
+        matInput
+        ngModel
+        type="date"
+        placeholder="Data di Nascita"
+        #birthInput="ngModel"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Genere</mat-label>
+      <mat-select name="gender" ngModel #genderInput="ngModel">
+        <mat-option *ngFor="let gender of genders" [value]="gender.value">
+          {{ gender.viewValue }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        name="city"
+        ngModel
+        type="name"
+        placeholder="Città"
+        #nameInput="ngModel"
+        required
+      />
+      <mat-error *ngIf="nameInput.invalid"
+        >Inserisci una Città Valida.</mat-error
+      >
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit" *ngIf="!isLoading">
+      Signup
+    </button>
+  </form>
+</mat-card>

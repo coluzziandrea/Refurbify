@@ -1,15 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { UserGender } from 'src/app/model/user/user-gender';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.scss']
+  styleUrls: ['./signup.component.scss'],
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent implements OnInit, OnDestroy {
+  isLoading = false;
 
-  constructor() { }
+  genders = UserGender.values;
 
-  ngOnInit(): void {
-  }
+  constructor() {}
+  ngOnDestroy(): void {}
 
+  ngOnInit(): void {}
+
+  onSignup(form: NgForm) {}
 }
