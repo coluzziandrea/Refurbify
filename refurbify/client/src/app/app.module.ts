@@ -8,6 +8,8 @@ import { HeaderComponent } from './header/header.component';
 
 import { AngularMaterialModule } from './angular-material.module';
 import { RouterModule } from '@angular/router';
+import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent],
@@ -17,6 +19,10 @@ import { RouterModule } from '@angular/router';
     BrowserAnimationsModule,
     AngularMaterialModule,
     RouterModule,
+    LoggerModule.forRoot({
+      level: NgxLoggerLevel.DEBUG,
+    }),
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
