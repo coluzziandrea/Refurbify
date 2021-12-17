@@ -18,7 +18,7 @@ it('fails when an incorrect password is supplied', async () => {
       email: 'test@test.com',
       password: 'password',
       name: 'Mario',
-      birthDate: Date.now(),
+      birthDate: new Date().getTime(),
       gender: 'maschio',
       city: 'Rome',
     })
@@ -41,7 +41,7 @@ it('responds with a cookie when given valid credentials', async () => {
       email: 'test@test.com',
       password: 'password',
       name: 'Mario',
-      birthDate: Date.now(),
+      birthDate: new Date().getTime(),
       gender: 'maschio',
       city: 'Rome',
     })

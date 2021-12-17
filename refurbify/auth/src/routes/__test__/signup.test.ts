@@ -8,7 +8,7 @@ it('returns a 201 on successful signup', async () => {
       email: 'test@test.com',
       password: 'password',
       name: 'Mario',
-      birthDate: Date.now(),
+      birthDate: new Date().getTime(),
       gender: 'maschio',
       city: 'Rome',
     })
@@ -21,7 +21,7 @@ it('returns a 400 with missing or invalid email', async () => {
     .send({
       password: 'password',
       name: 'Mario',
-      birthDate: Date.now(),
+      birthDate: new Date().getTime(),
       gender: 'maschio',
       city: 'Rome',
     })
@@ -33,7 +33,7 @@ it('returns a 400 with missing or invalid email', async () => {
       email: 'alskdflaskjfd',
       password: 'password',
       name: 'Mario',
-      birthDate: Date.now(),
+      birthDate: new Date().getTime(),
       gender: 'maschio',
       city: 'Rome',
     })
@@ -46,7 +46,7 @@ it('returns a 400 with missing or invalid password', async () => {
     .send({
       email: 'test@test.com',
       name: 'Mario',
-      birthDate: Date.now(),
+      birthDate: new Date().getTime(),
       gender: 'maschio',
       city: 'Rome',
     })
@@ -58,7 +58,7 @@ it('returns a 400 with missing or invalid password', async () => {
       email: 'test@test.com',
       password: 'p',
       name: 'Mario',
-      birthDate: Date.now(),
+      birthDate: new Date().getTime(),
       gender: 'maschio',
       city: 'Rome',
     })
@@ -71,8 +71,7 @@ it('returns a 400 with missing or invalid name', async () => {
     .send({
       email: 'test@test.com',
       password: 'password',
-      name: 'Mario',
-      birthDate: Date.now(),
+      birthDate: new Date().getTime(),
       gender: 'maschio',
       city: 'Rome',
     })
@@ -83,8 +82,8 @@ it('returns a 400 with missing or invalid name', async () => {
     .send({
       email: 'test@test.com',
       password: 'password',
-      name: 'Mario',
-      birthDate: Date.now(),
+      name: '',
+      birthDate: new Date().getTime(),
       gender: 'maschio',
       city: 'Rome',
     })
@@ -123,7 +122,7 @@ it('returns a 400 with missing or invalid gender', async () => {
       email: 'test@test.com',
       password: 'password',
       name: 'Mario',
-      birthDate: Date.now(),
+      birthDate: new Date().getTime(),
       gender: '',
       city: 'Rome',
     })
@@ -135,7 +134,7 @@ it('returns a 400 with missing or invalid gender', async () => {
       email: 'test@test.com',
       password: 'password',
       name: 'Mario',
-      birthDate: Date.now(),
+      birthDate: new Date().getTime(),
       gender: 'notValid',
       city: 'Rome',
     })
@@ -147,7 +146,7 @@ it('returns a 400 with missing or invalid gender', async () => {
       email: 'test@test.com',
       password: 'password',
       name: 'Mario',
-      birthDate: Date.now(),
+      birthDate: new Date().getTime(),
       city: 'Rome',
     })
     .expect(400);
@@ -160,7 +159,7 @@ it('returns a 400 with missing or invalid city', async () => {
       email: 'test@test.com',
       password: 'password',
       name: 'Mario',
-      birthDate: Date.now(),
+      birthDate: new Date().getTime(),
       gender: 'maschio',
       city: '',
     })
@@ -172,7 +171,7 @@ it('returns a 400 with missing or invalid city', async () => {
       email: 'test@test.com',
       password: 'password',
       name: 'Mario',
-      birthDate: Date.now(),
+      birthDate: new Date().getTime(),
       gender: 'maschio',
     })
     .expect(400);
@@ -185,7 +184,7 @@ it('disallows duplicate emails', async () => {
       email: 'test@test.com',
       password: 'password',
       name: 'Mario',
-      birthDate: Date.now(),
+      birthDate: new Date().getTime(),
       gender: 'maschio',
       city: 'Rome',
     })
@@ -197,7 +196,7 @@ it('disallows duplicate emails', async () => {
       email: 'test@test.com',
       password: 'password',
       name: 'Mario',
-      birthDate: Date.now(),
+      birthDate: new Date().getTime(),
       gender: 'maschio',
       city: 'Rome',
     })
@@ -211,7 +210,7 @@ it('sets a cookie after successful signup', async () => {
       email: 'test@test.com',
       password: 'password',
       name: 'Mario',
-      birthDate: Date.now(),
+      birthDate: new Date().getTime(),
       gender: 'maschio',
       city: 'Rome',
     })

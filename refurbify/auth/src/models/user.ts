@@ -5,7 +5,7 @@ interface UserAttrs {
   email: string;
   password: string;
   name: string;
-  birthDate: Date;
+  birthDate: number;
   gender: string;
   city: string;
   pictureUrl?: string;
@@ -19,7 +19,7 @@ interface UserDoc extends mongoose.Document {
   email: string;
   password: string;
   name: string;
-  birthDate: Date;
+  birthDate: number;
   gender: string;
   city: string;
   pictureUrl?: string;
@@ -40,7 +40,7 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
     birthDate: {
-      type: Date,
+      type: Number,
       required: true,
     },
     gender: {

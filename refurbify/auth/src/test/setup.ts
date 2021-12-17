@@ -35,7 +35,7 @@ global.signin = async () => {
   const email = 'test@test.com';
   const password = 'password';
   const name = 'Mario';
-  const birthDate = Date.now();
+  const birthDate = new Date().getTime();
   const gender = 'maschio';
   const city = 'Rome';
 

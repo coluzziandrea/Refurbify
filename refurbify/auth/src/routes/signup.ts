@@ -13,15 +13,25 @@ const router = express.Router();
 router.post(
   '/api/users/signup',
   [
-    body('email').isEmail().withMessage('Email must be valid'),
+    body('email').isEmail().withMessage("L'email deve essere valida"),
     body('password')
       .trim()
       .isLength({ min: 4, max: 20 })
-      .withMessage('Password must be between 4 and 20 characters'),
-    body('name').trim().isString().notEmpty(),
-    body('birthDate').isDate(),
-    //  body('gender').isIn(UserGender.valuesArr),
-    body('city').trim().isString().notEmpty(),
+      .withMessage('La Password deve essere compresa tra i 4 e i 20 caratteri'),
+    body('name')
+      .trim()
+      .isLength({ min: 1 })
+      .withMessage('il Nome deve essere una stringa non vuota'),
+    body('birthDate')
+      .isNumeric()
+      .withMessage('La data di nascita deve essere valida'),
+    body('gender')
+      .isIn(UserGender.valuesArr)
+      .withMessage("Il Genere deve essere uno fra 'Maschio' o 'Femmina'"),
+    body('city')
+      .trim()
+      .isLength({ min: 1 })
+      .withMessage('La Città deve essere una stringa non vuota'),
   ],
   validateRequest,
   async (req: Request, res: Response) => {
