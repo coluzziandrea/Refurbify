@@ -2,9 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { UserGender } from 'src/app/model/user/user-gender';
-import { AuthService } from '../auth.service';
-import { NGXLogger } from 'ngx-logger';
-
+import { AuthService } from '../services/auth.service';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',

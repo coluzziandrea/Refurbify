@@ -10,6 +10,7 @@ import { AngularMaterialModule } from './angular-material.module';
 import { RouterModule } from '@angular/router';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent],
@@ -18,6 +19,7 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     BrowserAnimationsModule,
     AngularMaterialModule,
+    FormsModule,
     RouterModule,
     LoggerModule.forRoot({
       level: NgxLoggerLevel.DEBUG,
