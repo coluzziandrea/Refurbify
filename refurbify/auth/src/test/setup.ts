@@ -34,10 +34,14 @@ afterAll(async () => {
 global.signin = async () => {
   const email = 'test@test.com';
   const password = 'password';
+  const name = 'Mario';
+  const birthDate = Date.now();
+  const gender = 'maschio';
+  const city = 'Rome';
 
   const response = await request(app)
     .post('/api/users/signup')
-    .send({ email, password })
+    .send({ email, password, name, birthDate, gender, city })
     .expect(201);
 
   const cookie = response.get('Set-Cookie');

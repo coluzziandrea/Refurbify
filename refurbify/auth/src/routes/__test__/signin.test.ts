@@ -17,6 +17,10 @@ it('fails when an incorrect password is supplied', async () => {
     .send({
       email: 'test@test.com',
       password: 'password',
+      name: 'Mario',
+      birthDate: Date.now(),
+      gender: 'maschio',
+      city: 'Rome',
     })
     .expect(201);
 
@@ -30,11 +34,16 @@ it('fails when an incorrect password is supplied', async () => {
 });
 
 it('responds with a cookie when given valid credentials', async () => {
+  // first create user
   await request(app)
     .post('/api/users/signup')
     .send({
       email: 'test@test.com',
       password: 'password',
+      name: 'Mario',
+      birthDate: Date.now(),
+      gender: 'maschio',
+      city: 'Rome',
     })
     .expect(201);
 

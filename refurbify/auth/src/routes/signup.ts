@@ -5,6 +5,7 @@ import { BadRequestError } from '../errors/bad-request-error';
 import { validateRequest } from '../middlewares/validate-request';
 
 import { User } from '../models/user';
+import { UserGender } from '../models/user-gender';
 import { Logger } from '../services/logger';
 
 const router = express.Router();
@@ -17,11 +18,15 @@ router.post(
       .trim()
       .isLength({ min: 4, max: 20 })
       .withMessage('Password must be between 4 and 20 characters'),
+    body('name').trim().isString().notEmpty(),
+    body('birthDate').isDate(),
+    //  body('gender').isIn(UserGender.valuesArr),
+    body('city').trim().isString().notEmpty(),
   ],
   validateRequest,
   async (req: Request, res: Response) => {
     Logger.debug('Signup called');
-    const { email, password } = req.body;
+    const { email, password, name, birthDate, gender, city } = req.body;
 
     const existingUser = await User.findOne({ email });
 
@@ -32,7 +37,7 @@ router.post(
       throw new BadRequestError('Email in use');
     }
 
-    const user = User.build({ email, password });
+    const user = User.build({ email, password, name, birthDate, gender, city });
 
     Logger.debug('calling user save...');
     await user.save();
