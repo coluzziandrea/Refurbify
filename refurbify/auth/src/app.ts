@@ -6,6 +6,7 @@ import cookieSession from 'cookie-session';
 import { signupRouter } from './routes/signup';
 import { NotFoundError } from './errors/not-found-error';
 import { errorHandler } from './middlewares/error-handler';
+import { signinRouter } from './routes/signin';
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use(
 );
 
 app.use(signupRouter);
+app.use(signinRouter);
 
 app.all('*', async (req, res) => {
   throw new NotFoundError();
