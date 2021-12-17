@@ -6,6 +6,7 @@ interface UserPayload {
   email: string;
 }
 
+// Extend Express's Request object to include currentUser property
 declare global {
   namespace Express {
     interface Request {
