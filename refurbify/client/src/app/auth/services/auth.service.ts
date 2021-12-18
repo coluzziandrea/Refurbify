@@ -36,6 +36,7 @@ export class AuthService {
           this.userId = response.data?.id;
           this.currentUserListener.next(response.data);
           this.isAuthenticated = true;
+          this.saveAuthData(response.data);
         } else {
           this.isAuthenticated = false;
           this.currentUserListener.next(null);
@@ -74,6 +75,7 @@ export class AuthService {
           this.userId = response.data?.id;
           this.currentUserListener.next(response.data);
           this.isAuthenticated = true;
+          this.saveAuthData(response.data);
         } else {
           this.isAuthenticated = false;
           this.currentUserListener.next(null);
@@ -84,5 +86,55 @@ export class AuthService {
         this.currentUserListener.next(null);
       },
     });
+  }
+
+  signout() {
+    const url = BACKEND_URL + '/signout';
+
+    this.http.post(url, {}).subscribe({
+      next: (response: any) => {
+        console.log(response);
+        this.isAuthenticated = false;
+        this.currentUserListener.next(null);
+        this.clearAuthData();
+      },
+      error: (error) => {
+        console.error(error);
+        throw error;
+      },
+    });
+  }
+
+  autoAuthUser() {
+    console.log('autoAuthUser called');
+
+    const authInformation = this.getAuthData();
+    if (!authInformation) {
+      console.log('saved user not found');
+      return;
+    }
+
+    console.log(
+      'saved user found successfully: ' + JSON.stringify(authInformation)
+    );
+    this.userId = authInformation.id;
+    this.currentUserListener.next(authInformation);
+    this.isAuthenticated = true;
+  }
+
+  saveAuthData(data: User) {
+    localStorage.setItem('currentUser', JSON.stringify(data));
+  }
+
+  private getAuthData(): User | null {
+    const userStr = localStorage.getItem('currentUser');
+    if (!userStr) {
+      return null;
+    }
+    return JSON.parse(userStr);
+  }
+
+  private clearAuthData() {
+    localStorage.removeItem('currentUser');
   }
 }

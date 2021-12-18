@@ -14,6 +14,9 @@
     <a mat-button routerLink="/user/profile">
       <span>{{ this.currentUser?.email }}</span>
     </a>
+    <a mat-button (click)="onLogout()">
+      <span>Logout</span>
+    </a>
   </ng-template>
 
   <ng-template #loggedOutBlock>
