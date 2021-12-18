@@ -9,11 +9,13 @@ import { HeaderComponent } from './header/header.component';
 import { AngularMaterialModule } from './angular-material.module';
 import { RouterModule } from '@angular/router';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { ErrorInterceptor } from './interceptors/error-interceptor';
+import { ErrorComponent } from './error/error.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent],
+  declarations: [AppComponent, HeaderComponent, ErrorComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -26,7 +28,9 @@ import { FormsModule } from '@angular/forms';
     }),
     HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

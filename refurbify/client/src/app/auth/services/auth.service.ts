@@ -19,8 +19,16 @@ export class AuthService {
   getAuthStatusListener() {
     return this.authStatusListener.asObservable();
   }
-  signup(email: any, password: any) {
+  signup(
+    email: any,
+    password: any,
+    name: any,
+    birthDate: any,
+    gender: any,
+    city: any
+  ) {
     const authData: AuthData = { email: email, password: password };
+
     this.http
       .post<{ token: string; userId: string }>(
         BACKEND_URL + '/signup',
