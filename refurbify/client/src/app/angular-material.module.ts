@@ -15,8 +15,13 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { MatDialogModule } from '@angular/material/dialog';
 
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatCommonModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+
 @NgModule({
   exports: [
+    MatCommonModule,
     MatInputModule,
     MatCardModule,
     MatButtonModule,
@@ -25,6 +30,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatProgressSpinnerModule,
     MatPaginatorModule,
     MatDialogModule,
+    MatDatepickerModule,
+    MatSelectModule,
   ],
 })
 export class AngularMaterialModule {}

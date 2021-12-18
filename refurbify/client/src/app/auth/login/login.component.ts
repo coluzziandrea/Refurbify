@@ -1,6 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -10,10 +13,29 @@ import { NgForm } from '@angular/forms';
 export class LoginComponent implements OnInit, OnDestroy {
   isLoading = false;
 
-  constructor() {}
-  ngOnDestroy(): void {}
+  authStatusSub!: Subscription;
 
-  ngOnInit(): void {}
+  constructor(private authService: AuthService, private router: Router) {}
 
-  onLogin(form: NgForm) {}
+  ngOnDestroy(): void {
+    this.authStatusSub.unsubscribe();
+  }
+
+  ngOnInit(): void {
+    this.authStatusSub = this.authService
+      .getAuthStatusListener()
+      .subscribe(() => {
+        this.isLoading = false;
+        this.router.navigate(['/user/home']);
+      });
+  }
+
+  onLogin(form: NgForm) {
+    console.log('onLogin called');
+    if (form.invalid) {
+      return;
+    }
+    this.isLoading = true;
+    this.authService.signin(form.value.email, form.value.password);
+  }
 }
