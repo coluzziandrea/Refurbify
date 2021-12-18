@@ -1,15 +1,32 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AboutComponent } from './home/about/about.component';
+import { ContactsComponent } from './home/contacts/contacts.component';
+import { LandComponent } from './home/land/land.component';
+import { NotFoundComponent } from './home/not-found/not-found.component';
 
 const routes: Routes = [
+  {
+    path: 'home',
+    component: LandComponent,
+  },
+  {
+    path: 'not-found',
+    component: NotFoundComponent,
+  },
+  {
+    path: 'contacts',
+    component: ContactsComponent,
+  },
+  {
+    path: 'about',
+    component: AboutComponent,
+  },
   {
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
   },
-  {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
-  },
+
   {
     path: 'user',
     loadChildren: () => import('./user/user.module').then((m) => m.UserModule),

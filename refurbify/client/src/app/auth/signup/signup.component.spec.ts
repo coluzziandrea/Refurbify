@@ -16,7 +16,6 @@ import { SignupComponent } from './signup.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthService } from '../services/auth.service';
 import { By } from '@angular/platform-browser';
-import { click } from 'src/app/common/util/test-utils';
 import { delay, of } from 'rxjs';
 
 describe('SignupComponent', () => {

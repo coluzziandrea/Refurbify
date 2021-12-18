@@ -1,17 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { Advertisement } from 'src/app/model/advertisement/advertisement.model';
+import { User } from 'src/app/model/user/user.model';
 import { environment } from 'src/environments/environment';
+import { NEAREST_ADVERTISEMENTS } from '../mocks/nearest-advertisements';
 
 const BACKEND_URL = environment.advertisementApiUrl;
 
 @Injectable({ providedIn: 'root' })
 export class AdvertisementService {
-  findNearAdvertisements(
-    arg0: any
-  ): import('rxjs').Observable<
-    import('../../model/advertisement/advertisement.model').Advertisement[]
-  > {
-    throw new Error('Method not implemented.');
-  }
   constructor(private http: HttpClient) {}
+
+  findNearAdvertisements(user: User): Observable<Advertisement[]> {
+    return of(NEAREST_ADVERTISEMENTS);
+  }
 }

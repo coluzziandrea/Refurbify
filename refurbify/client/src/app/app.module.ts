@@ -13,9 +13,21 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ErrorInterceptor } from './error/error-interceptor';
 import { ErrorComponent } from './error/error.component';
+import { AboutComponent } from './home/about/about.component';
+import { ContactsComponent } from './home/contacts/contacts.component';
+import { NotFoundComponent } from './home/not-found/not-found.component';
+import { LandComponent } from './home/land/land.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, ErrorComponent],
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    ErrorComponent,
+    LandComponent,
+    AboutComponent,
+    ContactsComponent,
+    NotFoundComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

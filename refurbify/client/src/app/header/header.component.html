@@ -1,11 +1,31 @@
 <mat-toolbar color="primary" class="mat-elevation-z6">
-  <a mat-button routerLink="/home/contacts">
+  <a
+    *ngIf="!userIsAuthenticated"
+    mat-button
+    routerLink="/home"
+    routerLinkActive="mat-accent"
+  >
+    <span>Home</span>
+  </a>
+
+  <a
+    *ngIf="userIsAuthenticated"
+    mat-button
+    routerLink="/user/home"
+    routerLinkActive="mat-accent"
+  >
+    <span>Home</span>
+  </a>
+
+  <a mat-button routerLink="/contacts" routerLinkActive="mat-accent">
     <span>Contacts</span>
   </a>
 
-  <a mat-button routerLink="/home/about">
+  <a mat-button routerLink="/about" routerLinkActive="mat-accent">
     <span>About</span>
   </a>
+
+  <span class="fill-space"></span>
 
   <div
     *ngIf="this.userIsAuthenticated; then loggedInBlock; else loggedOutBlock"
@@ -20,7 +40,7 @@
   </ng-template>
 
   <ng-template #loggedOutBlock>
-    <a mat-button routerLink="/auth/login">
+    <a mat-button routerLink="/auth/login" routerLinkActive="mat-accent">
       <span>Login</span>
     </a>
   </ng-template>

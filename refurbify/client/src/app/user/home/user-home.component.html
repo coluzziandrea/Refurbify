@@ -9,8 +9,9 @@
 
 <h1>Ultimi Annunci nella tua Zona</h1>
 
-<ng-container
-  *ngIf="latestNearAdvertisements$ | async as latestNearAdvertisements"
->
-  <app-ad-list [advertisements]="latestNearAdvertisements"></app-ad-list>
+<ng-container *ngIf="latestNearAdvertisements.length > 0">
+  <app-ad-list
+    [advertisements]="latestNearAdvertisements"
+    [currentUser]="this.currentUser"
+  ></app-ad-list>
 </ng-container>

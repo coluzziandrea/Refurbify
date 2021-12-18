@@ -1,7 +1,7 @@
 export interface AdvertisementCreateData {
   userId: string;
   category: string;
-  title: number;
+  title: string;
   description: string;
   price: number;
   createdAt: number;
