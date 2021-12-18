@@ -11,7 +11,7 @@ import { RouterModule } from '@angular/router';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { ErrorInterceptor } from './interceptors/error-interceptor';
+import { ErrorInterceptor } from './error/error-interceptor';
 import { ErrorComponent } from './error/error.component';
 
 @NgModule({

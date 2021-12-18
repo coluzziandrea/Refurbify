@@ -70,7 +70,7 @@ router.post(
     };
 
     Logger.info('Responding OK to User Signup.');
-    res.status(201).send(user);
+    res.status(201).send({ data: user });
   }
 );
 

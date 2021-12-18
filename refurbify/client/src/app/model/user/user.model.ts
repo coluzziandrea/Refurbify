@@ -1,6 +1,6 @@
-export interface SignupData {
+export interface User {
+  id: string;
   email: string;
-  password: string;
   name: string;
   birthDate: number;
   gender: string;

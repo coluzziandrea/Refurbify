@@ -44,6 +44,8 @@ describe('SignupComponent', () => {
           authService = TestBed.inject(AuthService);
 
           authService.getAuthStatusListener.and.returnValue(of(true));
+
+          fixture.detectChanges();
         });
     })
   );
@@ -53,8 +55,6 @@ describe('SignupComponent', () => {
   });
 
   it("should render input for user's data", () => {
-    fixture.detectChanges();
-
     const emailInput = el.query(By.css('input[name="email"]'));
     const passwordInput = el.query(By.css('input[name="password"]'));
     const nameInput = el.query(By.css('input[name="name"]'));
@@ -75,8 +75,6 @@ describe('SignupComponent', () => {
   });
 
   it('should call authService when signup is clicked with valid form', () => {
-    fixture.detectChanges();
-
     const myEmail = 'user@example.com';
     const myPwd = 'user@example.com';
     const myName = 'Mario';

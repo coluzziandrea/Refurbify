@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UserGender } from 'src/app/model/user/user-gender';
 import { AuthService } from '../services/auth.service';
@@ -15,14 +16,18 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   genders = UserGender.values;
 
-  constructor(private authService: AuthService) {}
-  ngOnDestroy(): void {}
+  constructor(private authService: AuthService, private router: Router) {}
+
+  ngOnDestroy(): void {
+    this.authStatusSub.unsubscribe();
+  }
 
   ngOnInit(): void {
     this.authStatusSub = this.authService
       .getAuthStatusListener()
       .subscribe(() => {
         this.isLoading = false;
+        this.router.navigate(['/user/home']);
       });
   }
 

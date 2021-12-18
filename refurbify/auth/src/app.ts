@@ -9,6 +9,7 @@ import { errorHandler } from './middlewares/error-handler';
 import { signinRouter } from './routes/signin';
 import { signoutRouter } from './routes/signout';
 import { currentUserRouter } from './routes/current-user';
+import cors from 'cors';
 
 const app = express();
 
@@ -20,6 +21,13 @@ app.use(
     secure: process.env.NODE_ENV !== 'test',
   })
 );
+
+var corsOptions = {
+  origin: 'http://localhost:4200',
+  optionsSuccessStatus: 200, // For legacy browser support
+};
+
+app.use(cors(corsOptions));
 
 app.use(signupRouter);
 app.use(signinRouter);
