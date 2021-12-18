@@ -20,8 +20,8 @@ describe('AuthService', () => {
   });
 
   it('should change status on successful signup', (done: DoneFn) => {
-    authService.getAuthStatusListener().subscribe((status) => {
-      expect(status)
+    authService.getCurrentUserListener().subscribe((user) => {
+      expect(user)
         .withContext('Signup has not changed service status')
         .toBeTruthy();
 

@@ -7,7 +7,18 @@
     <span>About</span>
   </a>
 
-  <a mat-button routerLink="/auth/login">
-    <span>Login</span>
-  </a>
+  <div
+    *ngIf="this.userIsAuthenticated; then loggedInBlock; else loggedOutBlock"
+  ></div>
+  <ng-template #loggedInBlock>
+    <a mat-button routerLink="/user/profile">
+      <span>{{ this.currentUser?.email }}</span>
+    </a>
+  </ng-template>
+
+  <ng-template #loggedOutBlock>
+    <a mat-button routerLink="/auth/login">
+      <span>Login</span>
+    </a>
+  </ng-template>
 </mat-toolbar>

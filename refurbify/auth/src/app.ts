@@ -22,12 +22,18 @@ app.use(
   })
 );
 
-var corsOptions = {
-  origin: 'http://localhost:4200',
-  optionsSuccessStatus: 200, // For legacy browser support
-};
+const corsOrigin = process.env.CORS_ORIGIN;
+console.log('cors: ' + corsOrigin);
+if (corsOrigin && corsOrigin?.length > 0) {
+  console.log('setting cors');
 
-app.use(cors(corsOptions));
+  var corsOptions = {
+    origin: corsOrigin,
+    optionsSuccessStatus: 200,
+  };
+
+  app.use(cors(corsOptions));
+}
 
 app.use(signupRouter);
 app.use(signinRouter);

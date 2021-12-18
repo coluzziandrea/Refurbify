@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
-import { app } from './app';
-
 require('dotenv').config();
+import { app } from './app';
 
 const start = async () => {
   console.log('checking workflow for merge...');

@@ -24,10 +24,12 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.authStatusSub = this.authService
-      .getAuthStatusListener()
-      .subscribe(() => {
+      .getCurrentUserListener()
+      .subscribe((user) => {
         this.isLoading = false;
-        this.router.navigate(['/user/home']);
+        if (user) {
+          this.router.navigate(['/user/home']);
+        }
       });
   }
 

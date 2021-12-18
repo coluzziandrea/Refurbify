@@ -11,14 +11,15 @@ const BACKEND_URL = environment.authApiUrl;
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private authStatusListener = new Subject<boolean>();
+  private currentUserListener = new Subject<User | null>();
+
   private isAuthenticated = false;
   private userId!: string;
 
   constructor(private http: HttpClient) {}
 
-  getAuthStatusListener() {
-    return this.authStatusListener.asObservable();
+  getCurrentUserListener() {
+    return this.currentUserListener.asObservable();
   }
 
   signin(email: any, password: any) {
@@ -31,18 +32,18 @@ export class AuthService {
       next: (response) => {
         console.log(response);
 
-        if (response.body) {
-          this.userId = response.body?.id;
-          this.authStatusListener.next(true);
+        if (response.data) {
+          this.userId = response.data?.id;
+          this.currentUserListener.next(response.data);
           this.isAuthenticated = true;
         } else {
           this.isAuthenticated = false;
-          this.authStatusListener.next(false);
+          this.currentUserListener.next(null);
         }
       },
       error: (error) => {
         console.error(error);
-        this.authStatusListener.next(false);
+        this.currentUserListener.next(null);
       },
     });
   }
@@ -69,18 +70,18 @@ export class AuthService {
       next: (response) => {
         console.log(response);
 
-        if (response.body) {
-          this.userId = response.body?.id;
-          this.authStatusListener.next(true);
+        if (response.data) {
+          this.userId = response.data?.id;
+          this.currentUserListener.next(response.data);
           this.isAuthenticated = true;
         } else {
           this.isAuthenticated = false;
-          this.authStatusListener.next(false);
+          this.currentUserListener.next(null);
         }
       },
       error: (error) => {
         console.error(error);
-        this.authStatusListener.next(false);
+        this.currentUserListener.next(null);
       },
     });
   }
