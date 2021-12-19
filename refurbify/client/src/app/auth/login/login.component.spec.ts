@@ -67,7 +67,7 @@ describe('LoginComponent', () => {
 
   it('should call authService when login is clicked with valid form', () => {
     const myEmail = 'user@example.com';
-    const myPwd = 'user@example.com';
+    const myPwd = 'password';
 
     const testForm = <NgForm>{
       value: {

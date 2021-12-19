@@ -15,4 +15,8 @@ export class AdvertisementService {
   findNearAdvertisements(user: User): Observable<Advertisement[]> {
     return of(NEAREST_ADVERTISEMENTS_MOCK);
   }
+
+  createAdvertisement(): Observable<Boolean> {
+    return of(true);
+  }
 }
