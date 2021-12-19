@@ -1,0 +1,65 @@
+<mat-card>
+  <mat-card-title> Nuovo Annuncio </mat-card-title>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+
+  <form (submit)="onSubmit(adForm)" #adForm="ngForm" *ngIf="!isLoading">
+    <mat-form-field>
+      <mat-label>Titolo</mat-label>
+      <input
+        matInput
+        name="title"
+        ngModel
+        type="text"
+        placeholder="Titolo"
+        #titleInput="ngModel"
+        required
+      />
+      <mat-error *ngIf="titleInput.invalid"
+        >Inserisci un Titolo Valido.</mat-error
+      >
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Categoria</mat-label>
+      <mat-select name="category" ngModel #categoryInput="ngModel">
+        <mat-option *ngFor="let category of categories" [value]="category">
+          {{ category | titlecase }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Prezzo (€)</mat-label>
+      <input
+        matInput
+        name="price"
+        ngModel
+        type="number"
+        placeholder="Prezzo (€)"
+        #priceInput="ngModel"
+        required
+      />
+      <mat-error *ngIf="priceInput.invalid"
+        >Inserisci un Prezzo Valido.</mat-error
+      >
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Descrizione</mat-label>
+      <textarea
+        matInput
+        name="description"
+        ngModel
+        placeholder="Descrizione"
+        #descriptionInput="ngModel"
+        required
+      ></textarea>
+      <mat-error *ngIf="descriptionInput.invalid"
+        >Inserisci una Descrizione Valida.</mat-error
+      >
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit" *ngIf="!isLoading">
+      Salva
+    </button>
+  </form>
+</mat-card>

@@ -5,6 +5,7 @@
   <mat-card-title class="adv-card-left">{{
     advertisement.title
   }}</mat-card-title>
+  <br />
   <mat-card-title class="adv-card-right">
     <span class="adv-price">{{ advertisement.price }} €</span></mat-card-title
   >
@@ -16,8 +17,12 @@
 
   <mat-card-subtitle class="adv-card-right">
     <span class="adv-category"> {{ advertisement.category | titlecase }}</span>
+    <br />
+
     <p>{{ advertisement.createdAt | date: "dd/MM/yyyy HH:mm" }}</p>
   </mat-card-subtitle>
+
+  <br /><br />
 
   <mat-card-content>
     <img
@@ -27,7 +32,6 @@
       [src]="advertisement.imageUrl"
     />
   </mat-card-content>
-
   <mat-card-actions class="adv-actions">
     <button
       mat-button

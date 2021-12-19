@@ -1,8 +1,11 @@
 <mat-card>
   <mat-spinner *ngIf="isLoading"></mat-spinner>
 
+  <mat-card-title> Signup </mat-card-title>
+
   <form (submit)="onSignup(signupForm)" #signupForm="ngForm" *ngIf="!isLoading">
     <mat-form-field>
+      <mat-label>E-Mail</mat-label>
       <input
         matInput
         name="email"
@@ -18,6 +21,7 @@
       >
     </mat-form-field>
     <mat-form-field>
+      <mat-label>Password</mat-label>
       <input
         type="password"
         name="password"
@@ -33,6 +37,7 @@
     </mat-form-field>
 
     <mat-form-field>
+      <mat-label>Nome</mat-label>
       <input
         matInput
         name="name"
@@ -46,6 +51,7 @@
     </mat-form-field>
 
     <mat-form-field>
+      <mat-label>Data di Nascita</mat-label>
       <input
         matInput
         ngModel
@@ -65,11 +71,12 @@
       </mat-select>
     </mat-form-field>
     <mat-form-field>
+      <mat-label>Città</mat-label>
       <input
         matInput
         name="city"
         ngModel
-        type="name"
+        type="text"
         placeholder="Città"
         #nameInput="ngModel"
         required
