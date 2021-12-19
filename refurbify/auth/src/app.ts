@@ -22,6 +22,7 @@ app.use(
   })
 );
 
+// setting cors for local run
 const corsOrigin = process.env.CORS_ORIGIN;
 console.log('cors: ' + corsOrigin);
 if (corsOrigin && corsOrigin?.length > 0) {
