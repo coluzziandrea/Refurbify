@@ -222,4 +222,62 @@ describe('CreateComponent', () => {
 
     expect(router.navigate).toHaveBeenCalledWith(['/user/my-advertisements']);
   }));
+
+  it('should not render errors on successfull submit', fakeAsync(() => {
+    advertisementService.createAdvertisement.and.returnValue(
+      of(true).pipe(delay(1000))
+    );
+
+    component.currentUser = currentUser;
+    const testForm = <NgForm>{
+      value: {
+        category,
+        title,
+        description,
+        price,
+      },
+    };
+
+    const errors = el.query(By.css('.form-errors'));
+    component.onSubmit(testForm);
+
+    // make time pass for subscription of create advertisement tick(1000) works as well
+    flushMicrotasks();
+
+    fixture.detectChanges();
+
+    expect(errors)
+      .withContext(
+        'Gli errori non devono essere mostrati su risultato positivo'
+      )
+      .not.toBeTruthy();
+  }));
+
+  it('should render errors on failure submit', fakeAsync(() => {
+    advertisementService.createAdvertisement.and.returnValue(
+      of(false).pipe(delay(1000))
+    );
+
+    component.currentUser = currentUser;
+    const testForm = <NgForm>{
+      value: {
+        category,
+        title,
+        description,
+        price,
+      },
+    };
+
+    const errors = el.query(By.css('.form-errors'));
+    component.onSubmit(testForm);
+
+    // make time pass for subscription of create advertisement tick(1000) works as well
+    flushMicrotasks();
+
+    fixture.detectChanges();
+
+    expect(errors)
+      .withContext('Gli errori devono essere mostrati su risultato negativo')
+      .toBeTruthy();
+  }));
 });
