@@ -20,15 +20,20 @@ export const currentUser = (
   res: Response,
   next: NextFunction
 ) => {
+  console.log('Current user mdw');
   if (!req.session?.jwt) {
+    console.log('not found JWT!');
     return next();
   }
 
+  console.log('extracting JWT...');
   try {
     const payload = jwt.verify(
       req.session.jwt,
       process.env.JWT_KEY!
     ) as UserPayload;
+
+    console.log('found user with ID: ' + payload.id);
     req.currentUser = payload;
   } catch (err) {}
 

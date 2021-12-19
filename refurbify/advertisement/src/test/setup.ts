@@ -33,6 +33,8 @@ afterAll(async () => {
 });
 
 global.signin = () => {
+  console.log('Faking sign in');
+
   // Build a JWT payload.  { id, email }
   const payload = {
     id: new mongoose.Types.ObjectId().toHexString(),
@@ -52,5 +54,5 @@ global.signin = () => {
   const base64 = Buffer.from(sessionJSON).toString('base64');
 
   // return a string thats the cookie with the encoded data
-  return [`express:sess=${base64}`];
+  return [`session=${base64}`];
 };

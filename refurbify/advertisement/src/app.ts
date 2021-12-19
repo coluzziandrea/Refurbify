@@ -4,6 +4,8 @@ import cookieSession from 'cookie-session';
 import cors from 'cors';
 import { errorHandler } from './middlewares/error-handler';
 import { NotFoundError } from './errors/not-found-error';
+import { CreateAdRouter } from './routes/new';
+import { currentUser } from './middlewares/current-user';
 
 const app = express();
 
@@ -29,6 +31,9 @@ if (corsOrigin && corsOrigin?.length > 0) {
 
   app.use(cors(corsOptions));
 }
+
+app.use(currentUser);
+app.use(CreateAdRouter);
 
 app.all('*', async (req, res) => {
   throw new NotFoundError();
