@@ -351,5 +351,5 @@ it('creates an advertisement with valid inputs', async () => {
   expect(ads[0].title).toEqual('Lampadario');
   expect(ads[0].description).toEqual('Lampadario vecchio come nuovo');
   expect(ads[0].price).toEqual(105);
-  expect(ads[0].price).toEqual(123456789);
+  expect(ads[0].createdAt).toEqual(123456789);
 });
