@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { AdvertisementCreateData } from 'src/app/model/advertisement/advertisement.create.model';
 import { Advertisement } from 'src/app/model/advertisement/advertisement.model';
 import { User } from 'src/app/model/user/user.model';
 import { environment } from 'src/environments/environment';
@@ -16,7 +17,9 @@ export class AdvertisementService {
     return of(NEAREST_ADVERTISEMENTS_MOCK);
   }
 
-  createAdvertisement(): Observable<Boolean> {
+  createAdvertisement(
+    advertisementData: AdvertisementCreateData
+  ): Observable<Boolean> {
     return of(true);
   }
 }

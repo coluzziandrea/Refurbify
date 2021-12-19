@@ -16,6 +16,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { delay, of } from 'rxjs';
 import { UserGender } from 'src/app/model/user/user-gender';
 import { User } from 'src/app/model/user/user.model';
+import { MyAdvertisementsComponent } from 'src/app/user/my-advertisements/my-advertisements.component';
 import { AdvertisementsModule } from '../advertisements.module';
 import { AdvertisementService } from '../services/advertisement.service';
 
@@ -60,7 +61,12 @@ describe('CreateComponent', () => {
         imports: [
           AdvertisementsModule,
           NoopAnimationsModule,
-          RouterTestingModule,
+          RouterTestingModule.withRoutes([
+            {
+              path: 'user/my-advertisements',
+              component: MyAdvertisementsComponent,
+            },
+          ]),
         ],
         providers: [
           { provide: AdvertisementService, useValue: advertisementServiceSpy },
@@ -103,24 +109,20 @@ describe('CreateComponent', () => {
   }));
 
   it("should not call service's creation with invalid form", fakeAsync(() => {
-    const testForm = <NgForm>{
-      value: {},
-    };
-
     component.onSubmit();
 
     expect(advertisementService.createAdvertisement).not.toHaveBeenCalled();
   }));
 
   it("should call service's creation with valid form", fakeAsync(() => {
-    const testForm = <NgForm>{
-      value: {
-        category,
-        title,
-        description,
-        price,
-      },
-    };
+    advertisementService.createAdvertisement.and.returnValue(of(true));
+
+    component.currentUser = currentUser;
+
+    component.adForm.controls['title'].setValue(title);
+    component.adForm.controls['description'].setValue(description);
+    component.adForm.controls['price'].setValue(price);
+    component.adForm.controls['category'].setValue(category);
 
     component.onSubmit();
 
@@ -128,16 +130,14 @@ describe('CreateComponent', () => {
   }));
 
   it("should append user's properties to form's values", fakeAsync(() => {
+    advertisementService.createAdvertisement.and.returnValue(of(true));
+
     component.currentUser = currentUser;
 
-    const testForm = <NgForm>{
-      value: {
-        category,
-        title,
-        description,
-        price,
-      },
-    };
+    component.adForm.controls['title'].setValue(title);
+    component.adForm.controls['description'].setValue(description);
+    component.adForm.controls['price'].setValue(price);
+    component.adForm.controls['category'].setValue(category);
 
     component.onSubmit();
 
@@ -156,25 +156,18 @@ describe('CreateComponent', () => {
   }));
 
   it('should hide all other controls and show loading spinner on form submit', fakeAsync(() => {
+    advertisementService.createAdvertisement.and.returnValue(
+      of(true).pipe(delay(100))
+    );
+
     component.currentUser = currentUser;
 
-    const categorySelect = el.query(By.css('.adv-category'));
-    const title = el.query(By.css('.adv-title'));
-    const description = el.query(By.css('.adv-description'));
-    const price = el.query(By.css('.adv-price'));
+    component.adForm.controls['title'].setValue(title);
+    component.adForm.controls['description'].setValue(description);
+    component.adForm.controls['price'].setValue(price);
+    component.adForm.controls['category'].setValue(category);
 
-    const spinner = el.query(By.css('.loading-spinner'));
-
-    const testForm = <NgForm>{
-      value: {
-        category,
-        title,
-        description,
-        price,
-      },
-    };
-
-    expect(spinner)
+    expect(el.query(By.css('.loading-spinner')))
       .withContext('Deve essere invisibile lo spinner prima del submit')
       .toBeFalsy();
 
@@ -182,41 +175,44 @@ describe('CreateComponent', () => {
 
     fixture.detectChanges();
 
+    const categorySelect = el.query(By.css('.adv-category'));
+    const titleInput = el.query(By.css('.adv-title'));
+    const descriptionInput = el.query(By.css('.adv-description'));
+    const priceInput = el.query(By.css('.adv-price'));
+
     expect(categorySelect)
       .withContext('Deve essere invisibile la combo box categoria annuncio')
       .toBeFalsy();
-    expect(title)
+    expect(titleInput)
       .withContext('Deve essere invisibile il titolo annuncio')
       .toBeFalsy();
-    expect(description)
+    expect(descriptionInput)
       .withContext('Deve essere invisibile la descrizione annuncio')
       .toBeFalsy();
-    expect(price)
+    expect(priceInput)
       .withContext('Deve essere invisibile il prezzo annuncio')
       .toBeFalsy();
 
-    expect(spinner)
+    tick(100);
+
+    expect(el.query(By.css('.loading-spinner')))
       .withContext('Deve essere visibile lo spinner dopo il submit')
       .toBeTruthy();
   }));
 
   it('should redirect to /user/my-advertisements on successfull submit', fakeAsync(() => {
-    advertisementService.createAdvertisement.and.returnValue(
-      of(true).pipe(delay(1000))
-    );
+    advertisementService.createAdvertisement.and.returnValue(of(true));
 
     const router = TestBed.inject(Router);
     spyOn(router, 'navigate');
 
     component.currentUser = currentUser;
-    const testForm = <NgForm>{
-      value: {
-        category,
-        title,
-        description,
-        price,
-      },
-    };
+
+    component.adForm.controls['title'].setValue(title);
+    component.adForm.controls['description'].setValue(description);
+    component.adForm.controls['price'].setValue(price);
+    component.adForm.controls['category'].setValue(category);
+
     component.onSubmit();
 
     // make time pass for subscription of create advertisement tick(1000) works as well

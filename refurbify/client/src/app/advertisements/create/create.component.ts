@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AdvertisementCreateData } from 'src/app/model/advertisement/advertisement.create.model';
 import { User } from 'src/app/model/user/user.model';
 import { ADVERTISEMENT_CATEGORIES } from '../../model/advertisement/advertisement.category';
 import { AdvertisementService } from '../services/advertisement.service';
@@ -30,16 +31,28 @@ export class CreateComponent {
   onSubmit() {
     console.log('onSubmit(): init...');
 
-    console.log(JSON.stringify(this.adForm.value));
-
     if (!this.adForm.valid) {
       console.log('onSubmit(): form is not valid, returning');
       return;
     }
 
     this.isLoading = true;
+
+    const createData: AdvertisementCreateData = {
+      userId: this.currentUser.id,
+      userEmail: this.currentUser.email,
+      userCity: this.currentUser.city,
+      userName: this.currentUser.name,
+      category: this.adForm.controls['category'].value,
+      title: this.adForm.controls['title'].value,
+      description: this.adForm.controls['description'].value,
+      price: this.adForm.controls['price'].value,
+      createdAt: new Date().getTime(),
+    };
+
     console.log('onSubmit(): calling advertisementService...');
-    const observable = this.advertisementService.createAdvertisement();
+    const observable =
+      this.advertisementService.createAdvertisement(createData);
 
     console.log('onSubmit(): subscribing to observable return...');
     observable.subscribe((res) => {
