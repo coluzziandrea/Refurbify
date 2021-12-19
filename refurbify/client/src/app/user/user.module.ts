@@ -4,9 +4,10 @@ import { UserRoutingModule } from './user.routing.module';
 import { UserHomeComponent } from './home/user-home.component';
 import { AngularMaterialModule } from '../angular-material.module';
 import { AdvertisementsModule } from '../advertisements/advertisements.module';
+import { MyAdvertisementsComponent } from './my-advertisements/my-advertisements.component';
 
 @NgModule({
-  declarations: [UserHomeComponent],
+  declarations: [UserHomeComponent, MyAdvertisementsComponent],
   imports: [
     CommonModule,
     UserRoutingModule,

@@ -2,8 +2,10 @@ import { DebugElement } from '@angular/core';
 import {
   ComponentFixture,
   fakeAsync,
+  flush,
   flushMicrotasks,
   TestBed,
+  tick,
   waitForAsync,
 } from '@angular/core/testing';
 import { NgForm } from '@angular/forms';
@@ -81,10 +83,10 @@ describe('CreateComponent', () => {
   });
 
   it('should render controls for user input', fakeAsync(() => {
-    const categorySelect = el.query(By.css('.ad-category'));
-    const title = el.query(By.css('.ad-title'));
-    const description = el.query(By.css('.ad-description'));
-    const price = el.query(By.css('.ad-price'));
+    const categorySelect = el.query(By.css('.adv-category'));
+    const title = el.query(By.css('.adv-title'));
+    const description = el.query(By.css('.adv-description'));
+    const price = el.query(By.css('.adv-price'));
 
     expect(categorySelect)
       .withContext('Deve essere visibile la combo box categoria annuncio')
@@ -105,7 +107,7 @@ describe('CreateComponent', () => {
       value: {},
     };
 
-    component.onSubmit(testForm);
+    component.onSubmit();
 
     expect(advertisementService.createAdvertisement).not.toHaveBeenCalled();
   }));
@@ -120,7 +122,7 @@ describe('CreateComponent', () => {
       },
     };
 
-    component.onSubmit(testForm);
+    component.onSubmit();
 
     expect(advertisementService.createAdvertisement).toHaveBeenCalled();
   }));
@@ -137,7 +139,7 @@ describe('CreateComponent', () => {
       },
     };
 
-    component.onSubmit(testForm);
+    component.onSubmit();
 
     expect(advertisementService.createAdvertisement).toHaveBeenCalledWith(
       jasmine.objectContaining({
@@ -156,10 +158,10 @@ describe('CreateComponent', () => {
   it('should hide all other controls and show loading spinner on form submit', fakeAsync(() => {
     component.currentUser = currentUser;
 
-    const categorySelect = el.query(By.css('.ad-category'));
-    const title = el.query(By.css('.ad-title'));
-    const description = el.query(By.css('.ad-description'));
-    const price = el.query(By.css('.ad-price'));
+    const categorySelect = el.query(By.css('.adv-category'));
+    const title = el.query(By.css('.adv-title'));
+    const description = el.query(By.css('.adv-description'));
+    const price = el.query(By.css('.adv-price'));
 
     const spinner = el.query(By.css('.loading-spinner'));
 
@@ -176,7 +178,7 @@ describe('CreateComponent', () => {
       .withContext('Deve essere invisibile lo spinner prima del submit')
       .toBeFalsy();
 
-    component.onSubmit(testForm);
+    component.onSubmit();
 
     fixture.detectChanges();
 
@@ -215,7 +217,7 @@ describe('CreateComponent', () => {
         price,
       },
     };
-    component.onSubmit(testForm);
+    component.onSubmit();
 
     // make time pass for subscription of create advertisement tick(1000) works as well
     flushMicrotasks();
@@ -224,29 +226,20 @@ describe('CreateComponent', () => {
   }));
 
   it('should not render errors on successfull submit', fakeAsync(() => {
-    advertisementService.createAdvertisement.and.returnValue(
-      of(true).pipe(delay(1000))
-    );
+    advertisementService.createAdvertisement.and.returnValue(of(true));
 
     component.currentUser = currentUser;
-    const testForm = <NgForm>{
-      value: {
-        category,
-        title,
-        description,
-        price,
-      },
-    };
 
-    const errors = el.query(By.css('.form-errors'));
-    component.onSubmit(testForm);
+    component.adForm.controls['title'].setValue(title);
+    component.adForm.controls['description'].setValue(description);
+    component.adForm.controls['price'].setValue(price);
+    component.adForm.controls['category'].setValue(category);
 
-    // make time pass for subscription of create advertisement tick(1000) works as well
-    flushMicrotasks();
+    component.onSubmit();
 
     fixture.detectChanges();
 
-    expect(errors)
+    expect(el.query(By.css('.adv-form-error')))
       .withContext(
         'Gli errori non devono essere mostrati su risultato positivo'
       )
@@ -254,29 +247,20 @@ describe('CreateComponent', () => {
   }));
 
   it('should render errors on failure submit', fakeAsync(() => {
-    advertisementService.createAdvertisement.and.returnValue(
-      of(false).pipe(delay(1000))
-    );
+    advertisementService.createAdvertisement.and.returnValue(of(false));
 
     component.currentUser = currentUser;
-    const testForm = <NgForm>{
-      value: {
-        category,
-        title,
-        description,
-        price,
-      },
-    };
 
-    const errors = el.query(By.css('.form-errors'));
-    component.onSubmit(testForm);
+    component.adForm.controls['title'].setValue(title);
+    component.adForm.controls['description'].setValue(description);
+    component.adForm.controls['price'].setValue(price);
+    component.adForm.controls['category'].setValue(category);
 
-    // make time pass for subscription of create advertisement tick(1000) works as well
-    flushMicrotasks();
+    component.onSubmit();
 
     fixture.detectChanges();
 
-    expect(errors)
+    expect(el.query(By.css('.adv-form-error')))
       .withContext('Gli errori devono essere mostrati su risultato negativo')
       .toBeTruthy();
   }));
