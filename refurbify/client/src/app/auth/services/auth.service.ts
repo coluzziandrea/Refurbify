@@ -19,6 +19,7 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   getCurrentUserListener() {
+    console.log('getCurrentUserListener called');
     return this.currentUserListener.asObservable();
   }
 
@@ -57,6 +58,7 @@ export class AuthService {
     gender: string,
     city: string
   ) {
+    console.log('signup(): signup called');
     const signupData: SignupData = {
       email,
       password,
@@ -67,9 +69,10 @@ export class AuthService {
     };
     const url = BACKEND_URL + '/signup';
 
+    console.log('signup(): calling http post');
     this.http.post<ResponseData<User>>(url, signupData).subscribe({
       next: (response) => {
-        console.log(response);
+        console.log('signup(): received response: ' + JSON.stringify(response));
 
         if (response.data) {
           this.userId = response.data?.id;

@@ -7,8 +7,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { AuthModule } from '../auth.module';
 import { AuthService } from '../services/auth.service';
+import { USER_DATA_MOCK } from '../../__mocks__/user-data';
 
 import { LoginComponent } from './login.component';
+import { UserHomeComponent } from 'src/app/user/home/user-home.component';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -20,11 +22,17 @@ describe('LoginComponent', () => {
     waitForAsync(() => {
       const authServiceSpy = jasmine.createSpyObj('AuthService', [
         'signin',
-        'getAuthStatusListener',
+        'getCurrentUserListener',
       ]);
 
       TestBed.configureTestingModule({
-        imports: [AuthModule, NoopAnimationsModule, RouterTestingModule],
+        imports: [
+          AuthModule,
+          NoopAnimationsModule,
+          RouterTestingModule.withRoutes([
+            { path: 'user/home', component: UserHomeComponent },
+          ]),
+        ],
         providers: [{ provide: AuthService, useValue: authServiceSpy }],
       })
         .compileComponents()
@@ -35,7 +43,9 @@ describe('LoginComponent', () => {
 
           authService = TestBed.inject(AuthService);
 
-          authService.getAuthStatusListener.and.returnValue(of(true));
+          authService.getCurrentUserListener.and.returnValue(
+            of(USER_DATA_MOCK)
+          );
           fixture.detectChanges();
         });
     })

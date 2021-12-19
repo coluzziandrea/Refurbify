@@ -17,6 +17,9 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthService } from '../services/auth.service';
 import { By } from '@angular/platform-browser';
 import { delay, of } from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
+import { UserHomeComponent } from 'src/app/user/home/user-home.component';
+import { USER_DATA_MOCK } from 'src/app/__mocks__/user-data';
 
 describe('SignupComponent', () => {
   let component: SignupComponent;
@@ -28,11 +31,17 @@ describe('SignupComponent', () => {
     waitForAsync(() => {
       const authServiceSpy = jasmine.createSpyObj('AuthService', [
         'signup',
-        'getAuthStatusListener',
+        'getCurrentUserListener',
       ]);
 
       TestBed.configureTestingModule({
-        imports: [AuthModule, NoopAnimationsModule],
+        imports: [
+          AuthModule,
+          NoopAnimationsModule,
+          RouterTestingModule.withRoutes([
+            { path: 'user/home', component: UserHomeComponent },
+          ]),
+        ],
         providers: [{ provide: AuthService, useValue: authServiceSpy }],
       })
         .compileComponents()
@@ -42,7 +51,9 @@ describe('SignupComponent', () => {
           el = fixture.debugElement;
           authService = TestBed.inject(AuthService);
 
-          authService.getAuthStatusListener.and.returnValue(of(true));
+          authService.getCurrentUserListener.and.returnValue(
+            of(USER_DATA_MOCK)
+          );
 
           fixture.detectChanges();
         });

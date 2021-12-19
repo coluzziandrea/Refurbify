@@ -1,6 +1,6 @@
 import { Advertisement } from 'src/app/model/advertisement/advertisement.model';
 
-export const NEAREST_ADVERTISEMENTS: Advertisement[] = [
+export const NEAREST_ADVERTISEMENTS_MOCK: Advertisement[] = [
   {
     id: '111111',
     userId: '123456',

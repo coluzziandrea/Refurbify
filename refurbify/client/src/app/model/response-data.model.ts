@@ -1,4 +1,4 @@
 export interface ResponseData<T> {
   data?: T;
-  errors: { message: string; field?: string }[];
+  errors?: { message: string; field?: string }[];
 }
