@@ -10,6 +10,7 @@ import { NgForm } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 import { delay, of } from 'rxjs';
 import { UserGender } from 'src/app/model/user/user-gender';
 import { User } from 'src/app/model/user/user.model';
@@ -54,7 +55,11 @@ describe('CreateComponent', () => {
       );
 
       TestBed.configureTestingModule({
-        imports: [AdvertisementsModule, NoopAnimationsModule],
+        imports: [
+          AdvertisementsModule,
+          NoopAnimationsModule,
+          RouterTestingModule,
+        ],
         providers: [
           { provide: AdvertisementService, useValue: advertisementServiceSpy },
         ],
