@@ -5,7 +5,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { AdvertisementService } from 'src/app/advertisements/services/advertisement.service';
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { NEAREST_ADVERTISEMENTS_MOCK } from 'src/app/__mocks__/nearest-advertisements';
+import { ADVERTISEMENTS_MOCK } from 'src/app/__mocks__/advertisements';
 import { USER_DATA_MOCK } from 'src/app/__mocks__/user-data';
 import { UserModule } from '../user.module';
 
@@ -52,7 +52,7 @@ describe('UserHomeComponent', () => {
             of(USER_DATA_MOCK)
           );
           advertisementService.findNearAdvertisements.and.returnValue(
-            of(NEAREST_ADVERTISEMENTS_MOCK)
+            of(ADVERTISEMENTS_MOCK)
           );
           fixture.detectChanges();
         });
