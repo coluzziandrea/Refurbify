@@ -36,6 +36,8 @@ export class CreateComponent {
       return;
     }
 
+    console.log('onSubmit(): currentUser: ' + this.currentUser);
+
     this.isLoading = true;
 
     const createData: AdvertisementCreateData = {

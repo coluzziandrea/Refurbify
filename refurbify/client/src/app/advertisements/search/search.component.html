@@ -11,15 +11,20 @@
   <table class="example-full-width" cellspacing="0">
     <tr>
       <td>
-        <mat-form-field class="example-full-width" appearance="fill">
+        <mat-form-field class="form-full-width" appearance="fill">
           <mat-label>Titolo</mat-label>
-          <input #titleInput matInput placeholder="Titolo" />
+          <input class="adv-title" #titleInput matInput placeholder="Titolo" />
         </mat-form-field>
       </td>
       <td>
-        <mat-form-field class="example-full-width" appearance="fill">
+        <mat-form-field class="form-full-width" appearance="fill">
           <mat-label>Categoria</mat-label>
-          <mat-select name="category" ngModel #categoryInput="ngModel">
+          <mat-select
+            name="category"
+            class="adv-category"
+            ngModel
+            #categoryInput="ngModel"
+          >
             <mat-option value="all"> Tutte le Categorie </mat-option>
             <mat-option *ngFor="let category of categories" [value]="category">
               {{ category | titlecase }}
@@ -28,9 +33,9 @@
         </mat-form-field>
       </td>
       <td>
-        <mat-form-field class="example-full-width" appearance="fill">
+        <mat-form-field class="form-full-width" appearance="fill">
           <mat-label>Città</mat-label>
-          <input matInput #emailInput placeholder="Città" />
+          <input class="adv-city" matInput #emailInput placeholder="Città" />
         </mat-form-field>
       </td>
 

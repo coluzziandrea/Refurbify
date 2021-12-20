@@ -1,5 +1,11 @@
 import { DebugElement } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  waitForAsync,
+} from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
@@ -64,4 +70,20 @@ describe('SearchComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should render controls for user input', fakeAsync(() => {
+    const categorySelect = el.query(By.css('.adv-category'));
+    const titleInput = el.query(By.css('.adv-title'));
+    const cityInput = el.query(By.css('.adv-city'));
+
+    expect(categorySelect)
+      .withContext('Deve essere visibile la combo box categoria annuncio')
+      .toBeTruthy();
+    expect(titleInput)
+      .withContext('Deve essere visibile il box per il titolo')
+      .toBeTruthy();
+    expect(cityInput)
+      .withContext('Deve essere visibile il box per la città')
+      .toBeTruthy();
+  }));
 });
