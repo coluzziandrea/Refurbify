@@ -34,7 +34,9 @@ describe('AdvertisementService', () => {
 
     flushMicrotasks();
 
-    const req = httpTestingController.expectOne('/api/advertisements');
+    const req = httpTestingController.expectOne((req) =>
+      req.url.startsWith('/api/advertisements')
+    );
 
     expect(req.request.method).toEqual('GET');
     expect(req.request.params.get('userId')).toEqual('');
@@ -54,7 +56,9 @@ describe('AdvertisementService', () => {
 
     flushMicrotasks();
 
-    const req = httpTestingController.expectOne('/api/advertisements');
+    const req = httpTestingController.expectOne((req) =>
+      req.url.startsWith('/api/advertisements')
+    );
     expect(req.request.method).toEqual('GET');
 
     expect(req.request.params.get('userId')).toEqual('');
@@ -74,7 +78,9 @@ describe('AdvertisementService', () => {
       .searchAdvertisements(title, category, city)
       .subscribe((res) => (ads = res));
 
-    const req = httpTestingController.expectOne('/api/advertisements');
+    const req = httpTestingController.expectOne((req) =>
+      req.url.startsWith('/api/advertisements')
+    );
 
     req.flush(SEARCH_ADVERTISEMENTS_MOCK);
 

@@ -72,7 +72,7 @@ router.post(
     });
 
     await ad.save();
-    res.status(201).send(ad);
+    res.status(201).send({ data: ad });
   }
 );
 
