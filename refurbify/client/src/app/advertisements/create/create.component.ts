@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from 'src/app/auth/services/auth.service';
 import { AdvertisementCreateData } from 'src/app/model/advertisement/advertisement.create.model';
 import { User } from 'src/app/model/user/user.model';
 import { ADVERTISEMENT_CATEGORIES } from '../../model/advertisement/advertisement.category';
@@ -17,13 +18,13 @@ export class CreateComponent {
 
   formError?: string;
 
-  @Input()
-  currentUser!: User;
+  currentUser = this.authService.currentUser;
 
   @ViewChild(NgForm)
   adForm!: NgForm;
 
   constructor(
+    private authService: AuthService,
     private advertisementService: AdvertisementService,
     private router: Router
   ) {}

@@ -14,6 +14,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { delay, of } from 'rxjs';
+import { AuthService } from 'src/app/auth/services/auth.service';
 import { UserGender } from 'src/app/model/user/user-gender';
 import { User } from 'src/app/model/user/user.model';
 import { MyAdvertisementsComponent } from 'src/app/user/my-advertisements/my-advertisements.component';
@@ -27,6 +28,7 @@ describe('CreateComponent', () => {
   let fixture: ComponentFixture<CreateComponent>;
   let el: DebugElement;
   let advertisementService: any;
+  let authService: any;
 
   const category = 'informatica';
   const title = 'Lampadario';
@@ -57,6 +59,12 @@ describe('CreateComponent', () => {
         ['createAdvertisement']
       );
 
+      const authServiceSpy = jasmine.createSpyObj('AuthService', [
+        'currentUser',
+      ]);
+
+      authServiceSpy.currentUser.and.returnValue(currentUser);
+
       TestBed.configureTestingModule({
         imports: [
           AdvertisementsModule,
@@ -70,6 +78,7 @@ describe('CreateComponent', () => {
         ],
         providers: [
           { provide: AdvertisementService, useValue: advertisementServiceSpy },
+          { provide: AuthService, useValue: authServiceSpy },
         ],
       })
         .compileComponents()

@@ -11,10 +11,11 @@ const BACKEND_URL = environment.authApiUrl;
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+  currentUser!: User;
+
   private currentUserListener = new Subject<User | null>();
 
   private isAuthenticated = false;
-  private userId!: string;
 
   constructor(private http: HttpClient) {}
 
@@ -34,7 +35,7 @@ export class AuthService {
         console.log(response);
 
         if (response.data) {
-          this.userId = response.data?.id;
+          this.currentUser = response.data;
           this.currentUserListener.next(response.data);
           this.isAuthenticated = true;
           this.saveAuthData(response.data);
@@ -75,7 +76,7 @@ export class AuthService {
         console.log('signup(): received response: ' + JSON.stringify(response));
 
         if (response.data) {
-          this.userId = response.data?.id;
+          this.currentUser = response.data;
           this.currentUserListener.next(response.data);
           this.isAuthenticated = true;
           this.saveAuthData(response.data);
@@ -120,7 +121,7 @@ export class AuthService {
     console.log(
       'saved user found successfully: ' + JSON.stringify(authInformation)
     );
-    this.userId = authInformation.id;
+    this.currentUser = authInformation;
     this.currentUserListener.next(authInformation);
     this.isAuthenticated = true;
   }
