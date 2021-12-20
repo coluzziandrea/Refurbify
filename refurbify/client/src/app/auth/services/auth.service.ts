@@ -30,25 +30,27 @@ export class AuthService {
 
     const url = BACKEND_URL + '/signin';
     console.log('executing request vs backend: ' + url);
-    this.http.post<ResponseData<User>>(url, authData).subscribe({
-      next: (response) => {
-        console.log(response);
+    this.http
+      .post<ResponseData<User>>(url, authData, { withCredentials: true })
+      .subscribe({
+        next: (response) => {
+          console.log(response);
 
-        if (response.data) {
-          this.currentUser = response.data;
-          this.currentUserListener.next(response.data);
-          this.isAuthenticated = true;
-          this.saveAuthData(response.data);
-        } else {
-          this.isAuthenticated = false;
+          if (response.data) {
+            this.currentUser = response.data;
+            this.currentUserListener.next(response.data);
+            this.isAuthenticated = true;
+            this.saveAuthData(response.data);
+          } else {
+            this.isAuthenticated = false;
+            this.currentUserListener.next(null);
+          }
+        },
+        error: (error) => {
+          console.error(error);
           this.currentUserListener.next(null);
-        }
-      },
-      error: (error) => {
-        console.error(error);
-        this.currentUserListener.next(null);
-      },
-    });
+        },
+      });
   }
 
   signup(
@@ -64,32 +66,36 @@ export class AuthService {
       email,
       password,
       name,
-      birthDate: birthDate.getTime(),
+      birthDate: new Date(birthDate).getTime(),
       gender,
       city,
     };
     const url = BACKEND_URL + '/signup';
 
     console.log('signup(): calling http post');
-    this.http.post<ResponseData<User>>(url, signupData).subscribe({
-      next: (response) => {
-        console.log('signup(): received response: ' + JSON.stringify(response));
+    this.http
+      .post<ResponseData<User>>(url, signupData, { withCredentials: true })
+      .subscribe({
+        next: (response) => {
+          console.log(
+            'signup(): received response: ' + JSON.stringify(response)
+          );
 
-        if (response.data) {
-          this.currentUser = response.data;
-          this.currentUserListener.next(response.data);
-          this.isAuthenticated = true;
-          this.saveAuthData(response.data);
-        } else {
-          this.isAuthenticated = false;
+          if (response.data) {
+            this.currentUser = response.data;
+            this.currentUserListener.next(response.data);
+            this.isAuthenticated = true;
+            this.saveAuthData(response.data);
+          } else {
+            this.isAuthenticated = false;
+            this.currentUserListener.next(null);
+          }
+        },
+        error: (error) => {
+          console.error(error);
           this.currentUserListener.next(null);
-        }
-      },
-      error: (error) => {
-        console.error(error);
-        this.currentUserListener.next(null);
-      },
-    });
+        },
+      });
   }
 
   signout() {

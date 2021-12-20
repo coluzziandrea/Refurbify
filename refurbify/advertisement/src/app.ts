@@ -28,6 +28,7 @@ if (corsOrigin && corsOrigin?.length > 0) {
   var corsOptions = {
     origin: corsOrigin,
     optionsSuccessStatus: 200,
+    credentials: true,
   };
 
   app.use(cors(corsOptions));

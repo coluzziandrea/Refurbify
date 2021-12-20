@@ -45,6 +45,7 @@ router.post(
   ],
   validateRequest,
   async (req: Request, res: Response) => {
+    console.log('createAd(): Init...');
     const {
       userId,
       userEmail,
@@ -71,7 +72,11 @@ router.post(
       imageUrl,
     });
 
+    console.log('createAd(): saving ad: ' + JSON.stringify(ad));
+
     await ad.save();
+
+    console.log('createAd(): saved ad.');
     res.status(201).send({ data: ad });
   }
 );

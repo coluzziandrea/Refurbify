@@ -30,13 +30,15 @@ export class AdvertisementService {
     advertisementData: AdvertisementCreateData
   ): Observable<Boolean> {
     return this.http
-      .post<ResponseData<Advertisement>>(BACKEND_URL, advertisementData)
+      .post<ResponseData<Advertisement>>(BACKEND_URL, advertisementData, {
+        withCredentials: true,
+      })
       .pipe(
         map((res) => {
           if (res.errors) {
             return false;
           } else {
-            return res.data == null;
+            return res.data != null;
           }
         })
       );
@@ -51,6 +53,9 @@ export class AdvertisementService {
     const params = { userId, title, category, city };
     console.log('searchAds(): requesting with ' + JSON.stringify(params));
 
-    return this.http.get<Advertisement[]>(BACKEND_URL + '/search', { params });
+    return this.http.get<Advertisement[]>(BACKEND_URL + '/search', {
+      params,
+      withCredentials: true,
+    });
   }
 }
