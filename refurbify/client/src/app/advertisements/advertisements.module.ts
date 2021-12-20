@@ -6,8 +6,9 @@ import { AngularMaterialModule } from '../angular-material.module';
 import { CreateComponent } from './create/create.component';
 import { SearchComponent } from './search/search.component';
 import { FormsModule } from '@angular/forms';
+import { ShowAdvertisementComponent } from './show-advertisement/show-advertisement.component';
 @NgModule({
-  declarations: [AdListComponent, CreateComponent, SearchComponent],
+  declarations: [AdListComponent, CreateComponent, SearchComponent, ShowAdvertisementComponent],
   imports: [
     CommonModule,
     AdvertisementsRoutingModule,

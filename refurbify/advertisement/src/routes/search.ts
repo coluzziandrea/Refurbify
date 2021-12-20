@@ -7,9 +7,10 @@ import { Advertisement } from '../models/advertisement';
 const router = express.Router();
 
 router.get(
-  '/api/advertisements',
+  '/api/advertisements/search',
   requireAuth,
   async (req: Request, res: Response) => {
+    console.log('searchAdvertisements(): Init...');
     const { userId, userCity, title, category } = req.query;
 
     let myQuery = Advertisement.find();

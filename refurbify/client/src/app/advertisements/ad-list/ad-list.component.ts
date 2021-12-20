@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { Advertisement } from 'src/app/model/advertisement/advertisement.model';
 import { User } from 'src/app/model/user/user.model';
 
@@ -14,11 +15,12 @@ export class AdListComponent {
   @Input()
   currentUser!: User;
 
-  constructor() {}
+  @Output()
+  onDeleteAd = new EventEmitter<string>();
 
-  onEditAdvertisement(advertisement: Advertisement) {}
-
-  onDeleteAdvertisement(advertisement: Advertisement) {}
+  onDeleteAdvertisement(advertisement: Advertisement) {
+    this.onDeleteAd.emit(advertisement.id);
+  }
 
   isCurrentUserAd(advertisement: Advertisement) {
     return this.currentUser.id == advertisement.userId;

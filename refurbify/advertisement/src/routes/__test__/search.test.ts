@@ -3,10 +3,13 @@ import { app } from '../../app';
 import { AdvertisementAttrs } from '../../models/advertisement';
 import { ADVERTISEMENTS_INPUT_MOCK } from '../../__mocks__/advertisements';
 
-const apiUrl = '/api/advertisements';
+const apiUrl = '/api/advertisements/search';
 
 const createAdvertisement = (adv: AdvertisementAttrs) => {
-  return request(app).post(apiUrl).set('Cookie', global.signin()).send(adv);
+  return request(app)
+    .post('/api/advertisements')
+    .set('Cookie', global.signin())
+    .send(adv);
 };
 
 const prepareDatabase = async () => {
@@ -15,7 +18,7 @@ const prepareDatabase = async () => {
   }
 };
 
-it('has a route handler listening to /api/advertisements for get request', async () => {
+it('has a route handler listening to /api/advertisements/search for get request', async () => {
   const resp = await request(app).get(apiUrl).send();
 
   expect(resp.status).not.toEqual(404);

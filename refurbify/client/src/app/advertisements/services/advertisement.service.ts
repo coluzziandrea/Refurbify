@@ -49,6 +49,8 @@ export class AdvertisementService {
     city: string
   ): Observable<Advertisement[]> {
     const params = { userId, title, category, city };
-    return this.http.get<Advertisement[]>(BACKEND_URL, { params });
+    console.log('searchAds(): requesting with ' + JSON.stringify(params));
+
+    return this.http.get<Advertisement[]>(BACKEND_URL + '/search', { params });
   }
 }

@@ -38,7 +38,7 @@ export const SEARCH_ADVERTISEMENTS_MOCK: Advertisement[] = [
     createdAt: 123456789892,
   },
   {
-    id: '22222',
+    id: '98777',
     userId: '12345',
     userEmail: 'andrea.romano@gmail.com',
     userCity: 'Napoli',

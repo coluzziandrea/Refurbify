@@ -45,7 +45,7 @@
       *ngIf="this.isCurrentUserAd(advertisement)"
       mat-button
       class="mat-raised-button mat-accent adv-edit"
-      (click)="onEditAdvertisement(advertisement)"
+      [routerLink]="['/advertisements/edit', advertisement.id]"
     >
       Modifica
     </button>

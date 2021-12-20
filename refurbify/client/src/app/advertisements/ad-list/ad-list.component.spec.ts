@@ -3,6 +3,7 @@ import {
   ComponentFixture,
   fakeAsync,
   TestBed,
+  tick,
   waitForAsync,
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -12,6 +13,8 @@ import { SEARCH_ADVERTISEMENTS_MOCK } from 'src/app/__mocks__/search-advertiseme
 import { AdvertisementsModule } from '../advertisements.module';
 import { USER_DATA_MOCK } from '../../__mocks__/user-data';
 import { AdListComponent } from './ad-list.component';
+import { Router } from '@angular/router';
+import { ShowAdvertisementComponent } from '../show-advertisement/show-advertisement.component';
 
 describe('AdListComponent', () => {
   let component: AdListComponent;
@@ -23,7 +26,12 @@ describe('AdListComponent', () => {
       TestBed.configureTestingModule({
         imports: [
           AdvertisementsModule,
-          RouterTestingModule,
+          RouterTestingModule.withRoutes([
+            {
+              path: 'advertisements/:id',
+              component: ShowAdvertisementComponent,
+            },
+          ]),
           NoopAnimationsModule,
         ],
       })
@@ -84,5 +92,23 @@ describe('AdListComponent', () => {
         'Deve mostrare il bottone cancella su annunci di proprietà dell utente'
       )
       .toBeTruthy();
+  }));
+
+  it('should emit an event on ad deletion', fakeAsync(() => {
+    spyOn(component.onDeleteAd, 'emit');
+
+    component.advertisements = SEARCH_ADVERTISEMENTS_MOCK;
+    component.currentUser = USER_DATA_MOCK;
+
+    fixture.detectChanges();
+
+    const element = el.query(By.css('.adv-delete'));
+    element.nativeElement.dispatchEvent(new Event('click'));
+
+    fixture.detectChanges();
+
+    expect(component.onDeleteAd.emit)
+      .withContext("should call emitter with current user's advertisement ID")
+      .toHaveBeenCalledWith('98777');
   }));
 });
