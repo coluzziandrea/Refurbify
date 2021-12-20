@@ -24,7 +24,6 @@ export class AdvertisementService {
   }
 
   searchAdvertisements(
-    userId: string,
     title: string,
     category: string,
     city: string

@@ -25,5 +25,20 @@ export class SearchComponent {
     private advertisementService: AdvertisementService
   ) {}
 
-  onSearch() {}
+  onSearch() {
+    let { title, category, city } = this.searchForm.value;
+
+    if (category === 'all') {
+      category = '';
+    }
+
+    this.isLoading = true;
+
+    this.advertisementService
+      .searchAdvertisements(title, category, city)
+      .subscribe((res) => {
+        this.isLoading = false;
+        this.resultAdvertisements = res;
+      });
+  }
 }

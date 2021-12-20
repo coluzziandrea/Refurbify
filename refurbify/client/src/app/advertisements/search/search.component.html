@@ -76,7 +76,7 @@
 
 <ng-container *ngIf="!isLoading && resultAdvertisements.length > 0">
   <app-ad-list
-    [advertisements]="resultAdvertisements"
+    [advertisements]="this.resultAdvertisements"
     [currentUser]="this.currentUser"
   ></app-ad-list>
 </ng-container>

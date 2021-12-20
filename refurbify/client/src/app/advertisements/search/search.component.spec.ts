@@ -1,7 +1,13 @@
-import { Component, DebugElement } from '@angular/core';
+import {
+  Component,
+  DebugElement,
+  Input,
+  NO_ERRORS_SCHEMA,
+} from '@angular/core';
 import {
   ComponentFixture,
   fakeAsync,
+  flush,
   TestBed,
   tick,
   waitForAsync,
@@ -11,22 +17,31 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { delay, of } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
+import { Advertisement } from 'src/app/model/advertisement/advertisement.model';
 import { User } from 'src/app/model/user/user.model';
 import { SEARCH_ADVERTISEMENTS_MOCK } from 'src/app/__mocks__/search-advertisements';
 import { USER_DATA_MOCK } from 'src/app/__mocks__/user-data';
+import { AdListComponent } from '../ad-list/ad-list.component';
 import { AdvertisementsModule } from '../advertisements.module';
 import { AdvertisementService } from '../services/advertisement.service';
 
 import { SearchComponent } from './search.component';
 
 @Component({ selector: 'app-ad-list', template: '' })
-class AdListStubComponent {}
+class AdListStubComponent {
+  @Input()
+  advertisements!: Advertisement[];
+
+  @Input()
+  currentUser!: User;
+}
 
 describe('SearchComponent', () => {
   let component: SearchComponent;
   let fixture: ComponentFixture<SearchComponent>;
   let el: DebugElement;
   let advertisementService: any;
+  let authService: any;
 
   const userId = '123456';
   const userEmail = 'test@test.com';
@@ -54,8 +69,6 @@ describe('SearchComponent', () => {
         ['searchAdvertisements']
       );
 
-      authServiceSpy.currentUser.and.returnValue(currentUser);
-
       TestBed.configureTestingModule({
         declarations: [AdListStubComponent],
         imports: [
@@ -75,6 +88,7 @@ describe('SearchComponent', () => {
           el = fixture.debugElement;
 
           advertisementService = TestBed.inject(AdvertisementService);
+          authService = TestBed.inject(AuthService);
 
           fixture.detectChanges();
         });
@@ -139,6 +153,7 @@ describe('SearchComponent', () => {
     component.searchForm.controls['category'].setValue(category);
     component.searchForm.controls['city'].setValue(city);
 
+    advertisementService.searchAdvertisements.and.returnValue(of([]));
     component.onSearch();
 
     expect(advertisementService.searchAdvertisements).toHaveBeenCalledWith(
@@ -159,6 +174,8 @@ describe('SearchComponent', () => {
     component.searchForm.controls['category'].setValue(category);
     component.searchForm.controls['city'].setValue(city);
 
+    advertisementService.searchAdvertisements.and.returnValue(of([]));
+
     component.onSearch();
 
     expect(advertisementService.searchAdvertisements).toHaveBeenCalledWith(
@@ -173,10 +190,18 @@ describe('SearchComponent', () => {
 
     advertisementService.searchAdvertisements.and.returnValue(of(ads));
 
+    component.currentUser = currentUser;
+
     component.onSearch();
 
+    fixture.detectChanges();
+
+    flush();
+
     const adList = el.query(By.css('app-ad-list'));
-    expect(adList.properties['advertisements']).toBe(ads);
-    expect(adList.properties['currentUser']).toBe(currentUser);
+    const listComponent: AdListStubComponent = adList.componentInstance;
+
+    expect(listComponent.advertisements).toEqual(ads);
+    expect(listComponent.currentUser.id).toEqual(currentUser.id);
   }));
 });
