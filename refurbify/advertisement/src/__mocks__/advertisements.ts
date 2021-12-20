@@ -1,8 +1,7 @@
-import { Advertisement } from '../models/advertisement';
+import { AdvertisementAttrs } from '../models/advertisement';
 
-export const ADVERTISEMENTS = [
+export const ADVERTISEMENTS_INPUT_MOCK: AdvertisementAttrs[] = [
   {
-    id: '111111',
     userId: '123456',
     userEmail: 'mario.rossi@gmail.com',
     userCity: 'Roma',
@@ -14,7 +13,6 @@ export const ADVERTISEMENTS = [
     createdAt: 12345678999,
   },
   {
-    id: '2',
     userId: '98765',
     userEmail: 'roberto.bianchi@gmail.com',
     userCity: 'Torino',
@@ -26,7 +24,6 @@ export const ADVERTISEMENTS = [
     createdAt: 123456789993,
   },
   {
-    id: '3',
     userId: '98765',
     userEmail: 'roberto.bianchi@gmail.com',
     userCity: 'Torino',

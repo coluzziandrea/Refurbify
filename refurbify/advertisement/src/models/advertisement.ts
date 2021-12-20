@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-interface AdvertisementAttrs {
+export interface AdvertisementAttrs {
   userId: string;
   userEmail: string;
   userCity: string;
