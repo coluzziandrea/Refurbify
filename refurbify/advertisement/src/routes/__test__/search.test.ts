@@ -1,6 +1,6 @@
 import request from 'supertest';
 import { app } from '../../app';
-import { Advertisement, AdvertisementAttrs } from '../../models/advertisement';
+import { AdvertisementAttrs } from '../../models/advertisement';
 import { ADVERTISEMENTS_INPUT_MOCK } from '../../__mocks__/advertisements';
 
 const apiUrl = '/api/advertisements';
@@ -57,7 +57,7 @@ it('returns date-ordered advertisements, starting from the latest', async () => 
 
   let lastDate = 0;
   for (let ad of ads) {
-    expect(lastDate).toBeLessThan(ad.createdAt);
+    expect(lastDate).toBeLessThanOrEqual(ad.createdAt);
     lastDate = ad.createdAt;
   }
 });

@@ -13,6 +13,8 @@ let mongo: MongoMemoryServer;
 beforeAll(async () => {
   process.env.JWT_KEY = 'test123';
 
+  jest.setTimeout(10000);
+
   mongo = await MongoMemoryServer.create();
   const mongoUri = mongo.getUri();
 
@@ -33,8 +35,6 @@ afterAll(async () => {
 });
 
 global.signin = () => {
-  console.log('Faking sign in');
-
   // Build a JWT payload.  { id, email }
   const payload = {
     id: new mongoose.Types.ObjectId().toHexString(),

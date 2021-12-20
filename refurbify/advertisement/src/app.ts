@@ -6,6 +6,7 @@ import { errorHandler } from './middlewares/error-handler';
 import { NotFoundError } from './errors/not-found-error';
 import { CreateAdRouter } from './routes/new';
 import { currentUser } from './middlewares/current-user';
+import { SearchAdsRouter } from './routes/search';
 
 const app = express();
 
@@ -34,6 +35,7 @@ if (corsOrigin && corsOrigin?.length > 0) {
 
 app.use(currentUser);
 app.use(CreateAdRouter);
+app.use(SearchAdsRouter);
 
 app.all('*', async (req, res) => {
   throw new NotFoundError();
