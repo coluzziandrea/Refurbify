@@ -15,3 +15,11 @@ export const SUCCESSFULL_GET_ADVERTISEMENT_MOCK: ResponseData<Advertisement> = {
     createdAt: 12345678999,
   },
 };
+
+export const ERROR_GET_ADVERTISEMENT_MOCK: ResponseData<Advertisement> = {
+  errors: [
+    {
+      message: 'Error',
+    },
+  ],
+};

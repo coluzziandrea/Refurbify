@@ -20,7 +20,9 @@ export class ShowAdvertisementComponent implements OnInit {
     this.advertisementService
       .getAdvertisement(this.activatedRoute.snapshot.params['id'])
       .subscribe((ad) => {
-        this.advertisement = ad;
+        if (ad) {
+          this.advertisement = ad;
+        }
       });
   }
 }

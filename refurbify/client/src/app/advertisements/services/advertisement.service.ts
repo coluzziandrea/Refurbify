@@ -45,8 +45,20 @@ export class AdvertisementService {
       );
   }
 
-  getAdvertisement(adId: string): Observable<Advertisement> {
-    return of(SUCCESSFULL_GET_ADVERTISEMENT_MOCK.data!);
+  getAdvertisement(adId: string): Observable<Advertisement | null> {
+    return this.http
+      .get<ResponseData<Advertisement>>(BACKEND_URL + '/' + adId, {
+        withCredentials: true,
+      })
+      .pipe(
+        map((res) => {
+          if (res.errors) {
+            return null;
+          } else {
+            return res.data!;
+          }
+        })
+      );
   }
 
   private searchAds(
