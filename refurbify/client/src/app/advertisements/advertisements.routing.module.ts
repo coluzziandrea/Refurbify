@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CreateComponent } from './create/create.component';
 import { SearchComponent } from './search/search.component';
+import { ShowAdvertisementComponent } from './show-advertisement/show-advertisement.component';
 
 const routes: Routes = [
   {
@@ -11,6 +12,10 @@ const routes: Routes = [
   {
     path: 'search',
     component: SearchComponent,
+  },
+  {
+    path: ':id',
+    component: ShowAdvertisementComponent,
   },
 ];
 
