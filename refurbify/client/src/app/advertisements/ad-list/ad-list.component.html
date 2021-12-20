@@ -35,7 +35,7 @@
   <mat-card-actions class="adv-actions">
     <button
       mat-button
-      class="mat-raised-button mat-primary"
+      class="mat-raised-button mat-primary adv-show"
       [routerLink]="['/advertisements', advertisement.id]"
     >
       Dettagli
@@ -44,7 +44,7 @@
     <button
       *ngIf="this.isCurrentUserAd(advertisement)"
       mat-button
-      class="mat-raised-button mat-accent"
+      class="mat-raised-button mat-accent adv-edit"
       (click)="onEditAdvertisement(advertisement)"
     >
       Modifica
@@ -53,7 +53,7 @@
     <button
       *ngIf="this.isCurrentUserAd(advertisement)"
       mat-button
-      class="mat-raised-button mat-warn"
+      class="mat-raised-button mat-warn adv-delete"
       (click)="onDeleteAdvertisement(advertisement)"
     >
       Elimina

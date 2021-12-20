@@ -41,7 +41,6 @@ describe('SearchComponent', () => {
   let fixture: ComponentFixture<SearchComponent>;
   let el: DebugElement;
   let advertisementService: any;
-  let authService: any;
 
   const userId = '123456';
   const userEmail = 'test@test.com';
@@ -88,7 +87,6 @@ describe('SearchComponent', () => {
           el = fixture.debugElement;
 
           advertisementService = TestBed.inject(AdvertisementService);
-          authService = TestBed.inject(AuthService);
 
           fixture.detectChanges();
         });

@@ -37,4 +37,16 @@ export const SEARCH_ADVERTISEMENTS_MOCK: Advertisement[] = [
     price: 85,
     createdAt: 123456789892,
   },
+  {
+    id: '22222',
+    userId: '12345',
+    userEmail: 'andrea.romano@gmail.com',
+    userCity: 'Napoli',
+    userName: 'Andrea Romano',
+    category: 'fai da te',
+    title: 'Rastrello',
+    description: 'rastrello come nuovo',
+    price: 10,
+    createdAt: 12345678992,
+  },
 ];

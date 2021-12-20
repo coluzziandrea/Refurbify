@@ -7,7 +7,7 @@ import { User } from 'src/app/model/user/user.model';
   templateUrl: './ad-list.component.html',
   styleUrls: ['./ad-list.component.scss'],
 })
-export class AdListComponent implements OnInit {
+export class AdListComponent {
   @Input()
   advertisements!: Advertisement[];
 
@@ -15,8 +15,6 @@ export class AdListComponent implements OnInit {
   currentUser!: User;
 
   constructor() {}
-
-  ngOnInit(): void {}
 
   onEditAdvertisement(advertisement: Advertisement) {}
 
