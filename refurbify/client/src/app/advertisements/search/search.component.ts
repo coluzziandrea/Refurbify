@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { ADVERTISEMENT_CATEGORIES } from 'src/app/model/advertisement/advertisement.category';
@@ -11,25 +11,19 @@ import { AdvertisementService } from '../services/advertisement.service';
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss'],
 })
-export class SearchComponent implements OnInit {
-  currentUser!: User;
+export class SearchComponent {
+  currentUser: User = this.authService.currentUser;
   categories = ADVERTISEMENT_CATEGORIES;
   resultAdvertisements: Advertisement[] = [];
   isLoading = false;
+
+  @ViewChild(NgForm)
+  searchForm!: NgForm;
 
   constructor(
     private authService: AuthService,
     private advertisementService: AdvertisementService
   ) {}
 
-  ngOnInit(): void {
-    this.authService.getCurrentUserListener().subscribe((user) => {
-      if (user != null) {
-        this.currentUser = user;
-      }
-    });
-    this.authService.autoAuthUser();
-  }
-
-  onSearch(searchForm: NgForm) {}
+  onSearch() {}
 }

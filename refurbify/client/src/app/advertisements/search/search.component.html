@@ -7,13 +7,21 @@
 
 <br />
 
-<form (submit)="onSearch(searchForm)" #searchForm="ngForm">
+<form (submit)="onSearch()" #searchForm="ngForm">
   <table class="example-full-width" cellspacing="0">
     <tr>
       <td>
         <mat-form-field class="form-full-width" appearance="fill">
           <mat-label>Titolo</mat-label>
-          <input class="adv-title" #titleInput matInput placeholder="Titolo" />
+          <input
+            name="title"
+            class="adv-title"
+            #titleInput="ngModel"
+            ngModel
+            type="text"
+            matInput
+            placeholder="Titolo"
+          />
         </mat-form-field>
       </td>
       <td>
@@ -35,7 +43,14 @@
       <td>
         <mat-form-field class="form-full-width" appearance="fill">
           <mat-label>Città</mat-label>
-          <input class="adv-city" matInput #emailInput placeholder="Città" />
+          <input
+            name="city"
+            class="adv-city"
+            matInput
+            ngModel
+            #emailInput="ngModel"
+            placeholder="Città"
+          />
         </mat-form-field>
       </td>
 
@@ -57,7 +72,7 @@
 
 <h1>Annunci Trovati</h1>
 
-<mat-spinner *ngIf="isLoading"></mat-spinner>
+<mat-spinner class="loading-spinner" *ngIf="isLoading"></mat-spinner>
 
 <ng-container *ngIf="!isLoading && resultAdvertisements.length > 0">
   <app-ad-list

@@ -1,40 +1,63 @@
-import { DebugElement } from '@angular/core';
+import { Component, DebugElement } from '@angular/core';
 import {
   ComponentFixture,
   fakeAsync,
   TestBed,
+  tick,
   waitForAsync,
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import { of } from 'rxjs';
+import { delay, of } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
+import { User } from 'src/app/model/user/user.model';
+import { SEARCH_ADVERTISEMENTS_MOCK } from 'src/app/__mocks__/search-advertisements';
 import { USER_DATA_MOCK } from 'src/app/__mocks__/user-data';
 import { AdvertisementsModule } from '../advertisements.module';
 import { AdvertisementService } from '../services/advertisement.service';
 
 import { SearchComponent } from './search.component';
 
+@Component({ selector: 'app-ad-list', template: '' })
+class AdListStubComponent {}
+
 describe('SearchComponent', () => {
   let component: SearchComponent;
   let fixture: ComponentFixture<SearchComponent>;
   let el: DebugElement;
-  let authService: any;
+  let advertisementService: any;
 
+  const userId = '123456';
+  const userEmail = 'test@test.com';
+  const userName = 'Mario Rossi';
+  const userCity = 'Roma';
+  const userBirth = new Date().getTime();
+  const userGender = 'maschio';
+
+  const currentUser: User = {
+    id: userId,
+    email: userEmail,
+    name: userName,
+    birthDate: userBirth,
+    gender: userGender,
+    city: userCity,
+  };
   beforeEach(
     waitForAsync(() => {
       const authServiceSpy = jasmine.createSpyObj('AuthService', [
-        'getCurrentUserListener',
-        'autoAuthUser',
+        'currentUser',
       ]);
 
       const advertisementServiceSpy = jasmine.createSpyObj(
         'AdvertisementService',
-        ['findNearAdvertisements']
+        ['searchAdvertisements']
       );
 
+      authServiceSpy.currentUser.and.returnValue(currentUser);
+
       TestBed.configureTestingModule({
+        declarations: [AdListStubComponent],
         imports: [
           AdvertisementsModule,
           RouterTestingModule,
@@ -51,21 +74,12 @@ describe('SearchComponent', () => {
           component = fixture.componentInstance;
           el = fixture.debugElement;
 
-          authService = TestBed.inject(AuthService);
+          advertisementService = TestBed.inject(AdvertisementService);
 
-          authService.getCurrentUserListener.and.returnValue(
-            of(USER_DATA_MOCK)
-          );
           fixture.detectChanges();
         });
     })
   );
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(SearchComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
 
   it('should create', () => {
     expect(component).toBeTruthy();
@@ -85,5 +99,84 @@ describe('SearchComponent', () => {
     expect(cityInput)
       .withContext('Deve essere visibile il box per la città')
       .toBeTruthy();
+  }));
+
+  it('should show loading spinner when submitted', fakeAsync(() => {
+    advertisementService.searchAdvertisements.and.returnValue(
+      of([]).pipe(delay(100))
+    );
+
+    expect(el.query(By.css('.loading-spinner')))
+      .withContext('Deve essere invisibile lo spinner prima del submit')
+      .toBeFalsy();
+
+    component.onSearch();
+
+    fixture.detectChanges();
+
+    expect(el.query(By.css('.loading-spinner')))
+      .withContext('Deve essere visibile lo spinner dopo il submit')
+      .toBeTruthy();
+
+    tick(100);
+    fixture.detectChanges();
+
+    expect(el.query(By.css('.loading-spinner')))
+      .withContext(
+        'Deve essere invisibile lo spinner prima dopo il ritorno dal service'
+      )
+      .toBeFalsy();
+  }));
+
+  it('should call service search on submit', fakeAsync(() => {
+    const title = 'Lampadario';
+    const category = 'informatica';
+    const city = 'Roma';
+
+    fixture.detectChanges();
+
+    component.searchForm.controls['title'].setValue(title);
+    component.searchForm.controls['category'].setValue(category);
+    component.searchForm.controls['city'].setValue(city);
+
+    component.onSearch();
+
+    expect(advertisementService.searchAdvertisements).toHaveBeenCalledWith(
+      title,
+      category,
+      city
+    );
+  }));
+
+  it('should call service search with no category if all is selected', fakeAsync(() => {
+    const title = 'Lampadario';
+    const category = 'all';
+    const city = 'Roma';
+
+    fixture.detectChanges();
+
+    component.searchForm.controls['title'].setValue(title);
+    component.searchForm.controls['category'].setValue(category);
+    component.searchForm.controls['city'].setValue(city);
+
+    component.onSearch();
+
+    expect(advertisementService.searchAdvertisements).toHaveBeenCalledWith(
+      title,
+      '',
+      city
+    );
+  }));
+
+  it('should render ad list on successfull submit with the right objects', fakeAsync(() => {
+    const ads = SEARCH_ADVERTISEMENTS_MOCK;
+
+    advertisementService.searchAdvertisements.and.returnValue(of(ads));
+
+    component.onSearch();
+
+    const adList = el.query(By.css('app-ad-list'));
+    expect(adList.properties['advertisements']).toBe(ads);
+    expect(adList.properties['currentUser']).toBe(currentUser);
   }));
 });

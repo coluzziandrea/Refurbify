@@ -1,0 +1,40 @@
+import { Advertisement } from 'src/app/model/advertisement/advertisement.model';
+
+export const SEARCH_ADVERTISEMENTS_MOCK: Advertisement[] = [
+  {
+    id: '111111',
+    userId: '123456',
+    userEmail: 'mario.rossi@gmail.com',
+    userCity: 'Roma',
+    userName: 'Mario Rossi',
+    category: 'Arredamento',
+    title: 'Lampadario',
+    description: 'Lampadario vecchio come nuovo',
+    price: 350.01,
+    createdAt: 12345678999,
+  },
+  {
+    id: '22222',
+    userId: '123454',
+    userEmail: 'roberto.bianchi@gmail.com',
+    userCity: 'Roma',
+    userName: 'Roberto Bianchi',
+    category: 'informatica',
+    title: 'Computer',
+    description: 'Computer usato solo poche volte',
+    price: 1100,
+    createdAt: 123456789992,
+  },
+  {
+    id: '333',
+    userId: '61bdb09a62ef218bfc2e732c',
+    userEmail: 'test@test.com',
+    userCity: 'Roma',
+    userName: 'Giacomo Verdi',
+    category: 'elettronica',
+    title: 'Telefono',
+    description: 'Telefono rovinato',
+    price: 85,
+    createdAt: 123456789892,
+  },
+];

@@ -22,4 +22,13 @@ export class AdvertisementService {
   ): Observable<Boolean> {
     return of(true);
   }
+
+  searchAdvertisements(
+    userId: string,
+    title: string,
+    category: string,
+    city: string
+  ): Observable<Advertisement[]> {
+    return of([]);
+  }
 }

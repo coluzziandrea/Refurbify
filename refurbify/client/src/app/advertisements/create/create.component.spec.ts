@@ -28,7 +28,6 @@ describe('CreateComponent', () => {
   let fixture: ComponentFixture<CreateComponent>;
   let el: DebugElement;
   let advertisementService: any;
-  let authService: any;
 
   const category = 'informatica';
   const title = 'Lampadario';

@@ -3,7 +3,6 @@ import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { AdvertisementCreateData } from 'src/app/model/advertisement/advertisement.create.model';
-import { User } from 'src/app/model/user/user.model';
 import { ADVERTISEMENT_CATEGORIES } from '../../model/advertisement/advertisement.category';
 import { AdvertisementService } from '../services/advertisement.service';
 
