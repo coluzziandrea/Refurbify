@@ -5,6 +5,7 @@ import { AdvertisementCreateData } from 'src/app/model/advertisement/advertiseme
 import { Advertisement } from 'src/app/model/advertisement/advertisement.model';
 import { ResponseData } from 'src/app/model/response-data.model';
 import { User } from 'src/app/model/user/user.model';
+import { SUCCESSFULL_GET_ADVERTISEMENT_MOCK } from 'src/app/__mocks__/get-advertisement';
 import { environment } from 'src/environments/environment';
 
 const BACKEND_URL = environment.advertisementApiUrl;
@@ -42,6 +43,10 @@ export class AdvertisementService {
           }
         })
       );
+  }
+
+  getAdvertisement(adId: string): Observable<Advertisement> {
+    return of(SUCCESSFULL_GET_ADVERTISEMENT_MOCK.data!);
   }
 
   private searchAds(
