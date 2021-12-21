@@ -21,7 +21,6 @@ export const currentUser = (
   next: NextFunction
 ) => {
   if (!req.session?.jwt) {
-    console.warn('Utente non loggato');
     return next();
   }
 
