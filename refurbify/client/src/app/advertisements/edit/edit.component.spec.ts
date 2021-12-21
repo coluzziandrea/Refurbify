@@ -1,9 +1,12 @@
 import { DebugElement } from '@angular/core';
 import {
   ComponentFixture,
+  discardPeriodicTasks,
   fakeAsync,
+  flush,
   flushMicrotasks,
   TestBed,
+  tick,
   waitForAsync,
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -11,19 +14,23 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
-import { AuthService } from 'src/app/auth/services/auth.service';
-import { User } from 'src/app/model/user/user.model';
+import { MyAdvertisementsComponent } from 'src/app/user/my-advertisements/my-advertisements.component';
 import { SUCCESSFULL_GET_ADVERTISEMENT_MOCK } from 'src/app/__mocks__/get-advertisement';
 import { AdvertisementsModule } from '../advertisements.module';
 import { AdvertisementService } from '../services/advertisement.service';
 
-import { ShowAdvertisementComponent } from './show-advertisement.component';
+import { EditComponent } from './edit.component';
 
-describe('ShowAdvertisementComponent', () => {
-  let component: ShowAdvertisementComponent;
-  let fixture: ComponentFixture<ShowAdvertisementComponent>;
+describe('EditComponent', () => {
+  let component: EditComponent;
+  let fixture: ComponentFixture<EditComponent>;
   let el: DebugElement;
   let advertisementService: any;
+
+  const category = 'informatica';
+  const title = 'Lampadario';
+  const description = 'Lampadario vecchio come nuovo';
+  const price = 50;
 
   let advertisement = SUCCESSFULL_GET_ADVERTISEMENT_MOCK.data!;
 
@@ -33,14 +40,19 @@ describe('ShowAdvertisementComponent', () => {
     waitForAsync(() => {
       const advertisementServiceSpy = jasmine.createSpyObj(
         'AdvertisementService',
-        ['getAdvertisement']
+        ['updateAdvertisement', 'getAdvertisement']
       );
 
       TestBed.configureTestingModule({
         imports: [
           AdvertisementsModule,
           NoopAnimationsModule,
-          RouterTestingModule,
+          RouterTestingModule.withRoutes([
+            {
+              path: 'user/my-advertisements',
+              component: MyAdvertisementsComponent,
+            },
+          ]),
         ],
         providers: [
           { provide: AdvertisementService, useValue: advertisementServiceSpy },
@@ -54,13 +66,14 @@ describe('ShowAdvertisementComponent', () => {
       })
         .compileComponents()
         .then(() => {
-          fixture = TestBed.createComponent(ShowAdvertisementComponent);
+          fixture = TestBed.createComponent(EditComponent);
           component = fixture.componentInstance;
           el = fixture.debugElement;
           advertisementService = TestBed.inject(AdvertisementService);
         });
     })
   );
+
   it('should create', () => {
     advertisementService.getAdvertisement.and.returnValue(of(advertisement));
 
@@ -68,45 +81,46 @@ describe('ShowAdvertisementComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should query advertisement service for current ad ID', fakeAsync(() => {
-    advertisementService.getAdvertisement.and.returnValue(of(advertisement));
-
-    fixture.detectChanges();
-
-    expect(advertisementService.getAdvertisement).toHaveBeenCalledWith(myAdID);
-  }));
-
   it('should render retrieved advertisement informations', fakeAsync(() => {
     advertisementService.getAdvertisement.and.returnValue(of(advertisement));
+    flushMicrotasks();
+    flush();
+    tick();
 
     fixture.detectChanges();
+    component.ngOnInit();
 
-    expect(
-      el.query(By.css('.adv-title')).nativeElement.textContent.trim()
-    ).toBe(advertisement.title);
+    expect(component.adForm.value.title).toBe(advertisement.title);
+    expect(component.adForm.value.description).toBe(advertisement.description);
+    expect(component.adForm.value.price).toBe(advertisement.price);
+    expect(component.adForm.value.category).toBe(
+      advertisement.category.toLowerCase()
+    );
 
-    expect(
-      el.query(By.css('.adv-price')).nativeElement.textContent.trim()
-    ).toBe(advertisement.price + ' €');
+    tick();
+  }));
 
-    expect(
-      el.query(By.css('.adv-category')).nativeElement.textContent.trim()
-    ).toBe('Arredamento');
+  it("should call advertisement service's update with valid form", fakeAsync(() => {
+    advertisementService.getAdvertisement.and.returnValue(of(advertisement));
 
-    expect(
-      el.query(By.css('.adv-description')).nativeElement.textContent.trim()
-    ).toBe(advertisement.description);
+    advertisementService.updateAdvertisement.and.returnValue(of(true));
 
-    expect(
-      el.query(By.css('.adv-owner')).nativeElement.textContent.trim()
-    ).toBe(advertisement.userName);
+    fixture.detectChanges();
+    component.ngOnInit();
 
-    expect(
-      el.query(By.css('.adv-createdAt')).nativeElement.textContent.trim()
-    ).toBe('23/05/1970 22:21');
+    component.adForm.value.title = title;
+    component.adForm.value.category = category;
+    component.adForm.value.description = description;
+    component.adForm.value.price = price;
 
-    expect(el.query(By.css('.adv-contact')).nativeElement.href).toBe(
-      'mailto:mario.rossi@gmail.com'
+    component.onSubmit();
+
+    expect(advertisementService.updateAdvertisement).toHaveBeenCalledWith(
+      myAdID,
+      title,
+      description,
+      price,
+      category
     );
   }));
 });

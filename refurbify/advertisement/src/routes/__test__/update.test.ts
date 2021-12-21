@@ -12,15 +12,10 @@ it('returns a 404 if the provided id does not exist', async () => {
     .put(`/api/advertisements/${id}`)
     .set('Cookie', global.signin())
     .send({
-      userId: '12345',
-      userEmail: 'test@test.com',
-      userCity: 'Roma',
-      userName: 'Mario Rossi',
       category: 'informatica',
       title: 'Lampadario',
       description: 'Lampadario vecchio come nuovo',
       price: 105,
-      createdAt: 123456789,
     })
     .expect(404);
 });
@@ -32,15 +27,10 @@ it('updates the ad provided valid inputs', async () => {
     .post('/api/advertisements')
     .set('Cookie', cookie)
     .send({
-      userId: '12345',
-      userEmail: 'test@test.com',
-      userCity: 'Roma',
-      userName: 'Mario Rossi',
       category: 'informatica',
       title: 'Lampadario',
       description: 'Lampadario vecchio come nuovo',
       price: 105,
-      createdAt: 123456789,
     });
 
   await request(app)

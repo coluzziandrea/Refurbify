@@ -13,21 +13,6 @@ router.put(
   '/api/advertisements/:id',
   requireAuth,
   [
-    body('userId').trim().not().isEmpty().withMessage("L'utente è richiesto"),
-    body('userEmail')
-      .trim()
-      .isEmail()
-      .withMessage("L'Email utente è richiesta"),
-    body('userCity')
-      .trim()
-      .not()
-      .isEmpty()
-      .withMessage("La città dell'utente è richiesta"),
-    body('userName')
-      .trim()
-      .not()
-      .isEmpty()
-      .withMessage("Il nome dell'utente è richiesto"),
     body('category')
       .trim()
       .not()
@@ -42,9 +27,6 @@ router.put(
     body('price')
       .isFloat({ gt: 0 })
       .withMessage('Il prezzo deve essere maggiore di 0'),
-    body('createdAt')
-      .isInt({ gt: 0 })
-      .withMessage('La data di creazione deve essere valida'),
   ],
   validateRequest,
   async (req: Request, res: Response) => {

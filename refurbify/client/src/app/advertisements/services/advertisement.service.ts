@@ -61,6 +61,16 @@ export class AdvertisementService {
       );
   }
 
+  updateAdvertisement(
+    adId: string,
+    title: string,
+    description: string,
+    price: number,
+    category: string
+  ): Observable<Boolean> {
+    return of(true);
+  }
+
   getAdvertisement(adId: string): Observable<Advertisement | null> {
     return this.http
       .get<ResponseData<Advertisement>>(BACKEND_URL + '/' + adId, {
