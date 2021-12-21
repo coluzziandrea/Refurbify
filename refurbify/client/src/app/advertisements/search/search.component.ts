@@ -41,4 +41,14 @@ export class SearchComponent {
         this.resultAdvertisements = res;
       });
   }
+
+  onDeleteAdvertisement(adId: string) {
+    this.advertisementService.deleteAdvertisement(adId).subscribe((res) => {
+      if (res) {
+        this.resultAdvertisements = this.resultAdvertisements.filter(
+          (el) => el.id !== adId
+        );
+      }
+    });
+  }
 }

@@ -78,5 +78,6 @@
   <app-ad-list
     [advertisements]="this.resultAdvertisements"
     [currentUser]="this.currentUser"
+    (onDeleteAd)="this.onDeleteAdvertisement($event)"
   ></app-ad-list>
 </ng-container>

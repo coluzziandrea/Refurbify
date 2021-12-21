@@ -1,8 +1,10 @@
 import {
   Component,
   DebugElement,
+  EventEmitter,
   Input,
   NO_ERRORS_SCHEMA,
+  Output,
 } from '@angular/core';
 import {
   ComponentFixture,
@@ -34,6 +36,9 @@ class AdListStubComponent {
 
   @Input()
   currentUser!: User;
+
+  @Output()
+  onDeleteAd = new EventEmitter<string>();
 }
 
 describe('SearchComponent', () => {
@@ -65,7 +70,7 @@ describe('SearchComponent', () => {
 
       const advertisementServiceSpy = jasmine.createSpyObj(
         'AdvertisementService',
-        ['searchAdvertisements']
+        ['searchAdvertisements', 'deleteAdvertisement']
       );
 
       TestBed.configureTestingModule({
@@ -201,5 +206,24 @@ describe('SearchComponent', () => {
 
     expect(listComponent.advertisements).toEqual(ads);
     expect(listComponent.currentUser.id).toEqual(currentUser.id);
+  }));
+
+  fit('should call service delete on ad list output', fakeAsync(() => {
+    const ads = SEARCH_ADVERTISEMENTS_MOCK;
+    advertisementService.searchAdvertisements.and.returnValue(of(ads));
+    component.currentUser = currentUser;
+    component.onSearch();
+    fixture.detectChanges();
+
+    flush();
+
+    const adList = el.query(By.css('app-ad-list'));
+    const listComponent: AdListStubComponent = adList.componentInstance;
+
+    const adId = '12345';
+
+    listComponent.onDeleteAd.emit(adId);
+
+    expect(advertisementService.deleteAdvertisement).toHaveBeenCalledWith(adId);
   }));
 });
