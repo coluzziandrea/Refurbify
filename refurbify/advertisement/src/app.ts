@@ -8,6 +8,7 @@ import { CreateAdRouter } from './routes/new';
 import { currentUser } from './middlewares/current-user';
 import { SearchAdsRouter } from './routes/search';
 import { GetAdRouter } from './routes/get';
+import { DeleteAdRouter } from './routes/delete';
 
 const app = express();
 
@@ -39,6 +40,7 @@ app.use(currentUser);
 app.use(CreateAdRouter);
 app.use(SearchAdsRouter);
 app.use(GetAdRouter);
+app.use(DeleteAdRouter);
 
 app.all('*', async (req, res) => {
   throw new NotFoundError();
