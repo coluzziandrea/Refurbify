@@ -160,4 +160,21 @@ describe('AdvertisementService', () => {
 
     expect(ad!).toEqual(SUCCESSFULL_GET_ADVERTISEMENT_MOCK.data!);
   }));
+
+  it('#deleteAdvertisement should execute a delete on /api/advertisements/:id', fakeAsync(() => {
+    const myId = '12345';
+
+    let executed: Boolean = false;
+
+    advertisementService.deleteAdvertisement(myId).subscribe((res) => {
+      executed = res;
+    });
+
+    const req = httpTestingController.expectOne('/api/advertisements/12345');
+
+    expect(req.request.method).toEqual('DELETE');
+
+    req.flush({});
+    flushMicrotasks();
+  }));
 });

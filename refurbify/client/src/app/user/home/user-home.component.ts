@@ -36,4 +36,14 @@ export class UserHomeComponent implements OnInit {
     });
     this.authService.autoAuthUser();
   }
+
+  onDeleteAdvertisement(adId: string) {
+    this.advertisementService.deleteAdvertisement(adId).subscribe((res) => {
+      if (res) {
+        this.latestNearAdvertisements = this.latestNearAdvertisements.filter(
+          (el) => el.id !== adId
+        );
+      }
+    });
+  }
 }

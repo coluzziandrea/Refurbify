@@ -46,7 +46,19 @@ export class AdvertisementService {
   }
 
   deleteAdvertisement(adId: string): Observable<Boolean> {
-    return of(true);
+    return this.http
+      .delete<any>(BACKEND_URL + '/' + adId, {
+        withCredentials: true,
+      })
+      .pipe(
+        map((res) => {
+          if (res.errors) {
+            return false;
+          } else {
+            return true;
+          }
+        })
+      );
   }
 
   getAdvertisement(adId: string): Observable<Advertisement | null> {

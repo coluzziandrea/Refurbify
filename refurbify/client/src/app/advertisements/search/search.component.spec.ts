@@ -208,7 +208,7 @@ describe('SearchComponent', () => {
     expect(listComponent.currentUser.id).toEqual(currentUser.id);
   }));
 
-  fit('should call service delete on ad list output', fakeAsync(() => {
+  it('should call service delete on ad list output', fakeAsync(() => {
     const ads = SEARCH_ADVERTISEMENTS_MOCK;
     advertisementService.searchAdvertisements.and.returnValue(of(ads));
     component.currentUser = currentUser;
