@@ -2,6 +2,7 @@ import request from 'supertest';
 import { app } from '../../app';
 
 it('returns a 201 on successful signup', async () => {
+  jest.setTimeout(30000);
   return request(app)
     .post('/api/users/signup')
     .send({

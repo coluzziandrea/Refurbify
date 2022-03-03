@@ -10,6 +10,8 @@ declare global {
 
 let mongo: MongoMemoryServer;
 
+jest.setTimeout(30000);
+
 beforeAll(async () => {
   process.env.JWT_KEY = 'test123';
 
