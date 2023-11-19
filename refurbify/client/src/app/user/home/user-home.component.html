@@ -1,0 +1,18 @@
+<a mat-raised-button color="primary" routerLink="/advertisements/create"
+  >Inserisci Annuncio</a
+>
+<a mat-raised-button color="primary" routerLink="/advertisements/search"
+  >Cerca Annunci</a
+>
+
+<br />
+
+<h1>Ultimi Annunci nella tua Zona</h1>
+
+<ng-container *ngIf="latestNearAdvertisements.length > 0">
+  <app-ad-list
+    [advertisements]="latestNearAdvertisements"
+    [currentUser]="this.currentUser"
+    (onDeleteAd)="this.onDeleteAdvertisement($event)"
+  ></app-ad-list>
+</ng-container>

@@ -1,0 +1,83 @@
+<a mat-raised-button color="primary" routerLink="/advertisements/create"
+  >Inserisci Annuncio</a
+>
+<a mat-raised-button color="primary" routerLink="/advertisements/search"
+  >Cerca Annunci</a
+>
+
+<br />
+
+<form (submit)="onSearch()" #searchForm="ngForm">
+  <table class="form-full-width" cellspacing="0">
+    <tr>
+      <td>
+        <mat-form-field class="form-full-width" appearance="fill">
+          <mat-label>Titolo</mat-label>
+          <input
+            name="title"
+            class="adv-title"
+            #titleInput="ngModel"
+            ngModel
+            type="text"
+            matInput
+            placeholder="Titolo"
+          />
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field class="form-full-width" appearance="fill">
+          <mat-label>Categoria</mat-label>
+          <mat-select
+            name="category"
+            class="adv-category"
+            ngModel
+            #categoryInput="ngModel"
+          >
+            <mat-option value="all"> Tutte le Categorie </mat-option>
+            <mat-option *ngFor="let category of categories" [value]="category">
+              {{ category | titlecase }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field class="form-full-width" appearance="fill">
+          <mat-label>Città</mat-label>
+          <input
+            name="city"
+            class="adv-city"
+            matInput
+            ngModel
+            #emailInput="ngModel"
+            placeholder="Città"
+          />
+        </mat-form-field>
+      </td>
+
+      <td>
+        <button
+          mat-fab
+          color="primary"
+          aria-label="Search Button"
+          type="submit"
+          [disabled]="isLoading"
+        >
+          <mat-icon>search</mat-icon>
+        </button>
+      </td>
+    </tr>
+  </table>
+</form>
+<br />
+
+<h1>Annunci Trovati</h1>
+
+<mat-spinner class="loading-spinner" *ngIf="isLoading"></mat-spinner>
+
+<ng-container *ngIf="!isLoading && resultAdvertisements.length > 0">
+  <app-ad-list
+    [advertisements]="this.resultAdvertisements"
+    [currentUser]="this.currentUser"
+    (onDeleteAd)="this.onDeleteAdvertisement($event)"
+  ></app-ad-list>
+</ng-container>

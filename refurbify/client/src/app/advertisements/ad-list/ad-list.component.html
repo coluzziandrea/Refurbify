@@ -1,0 +1,62 @@
+<mat-card
+  *ngFor="let advertisement of advertisements"
+  class="mat-elevation-z10 adv-card"
+>
+  <mat-card-title class="adv-card-left">{{
+    advertisement.title
+  }}</mat-card-title>
+  <br />
+  <mat-card-title class="adv-card-right">
+    <span class="adv-price">{{ advertisement.price }} €</span></mat-card-title
+  >
+
+  <br />
+  <mat-card-subtitle class="adv-card-left">
+    <p class="adv-city">{{ advertisement.userCity }}</p>
+  </mat-card-subtitle>
+
+  <mat-card-subtitle class="adv-card-right">
+    <span class="adv-category"> {{ advertisement.category | titlecase }}</span>
+    <br />
+
+    <p>{{ advertisement.createdAt | date: "dd/MM/yyyy HH:mm" }}</p>
+  </mat-card-subtitle>
+
+  <br /><br />
+
+  <mat-card-content>
+    <img
+      class="adv-photo"
+      *ngIf="advertisement.imageUrl"
+      mat-card-image
+      [src]="advertisement.imageUrl"
+    />
+  </mat-card-content>
+  <mat-card-actions class="adv-actions">
+    <button
+      mat-button
+      class="mat-raised-button mat-primary adv-show"
+      [routerLink]="['/advertisements', advertisement.id]"
+    >
+      Dettagli
+    </button>
+
+    <button
+      *ngIf="this.isCurrentUserAd(advertisement)"
+      mat-button
+      class="mat-raised-button mat-accent adv-edit"
+      [routerLink]="['/advertisements/edit', advertisement.id]"
+    >
+      Modifica
+    </button>
+
+    <button
+      *ngIf="this.isCurrentUserAd(advertisement)"
+      mat-button
+      class="mat-raised-button mat-warn adv-delete"
+      (click)="onDeleteAdvertisement(advertisement)"
+    >
+      Elimina
+    </button>
+  </mat-card-actions>
+</mat-card>
